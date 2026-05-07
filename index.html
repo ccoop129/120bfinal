@@ -1,0 +1,891 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1a1a2e;
+    --ink-mid: #2d2d4e;
+    --ink-light: #4a4a6a;
+    --mist: #e8e4dc;
+    --paper: #f5f2eb;
+    --gold: #b8860b;
+    --gold-light: #d4a843;
+    --accent: #4a6fa5;
+    --accent-light: #7a9fd4;
+    --fade: rgba(26,26,46,0.08);
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'EB Garamond', Georgia, serif;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    padding: 4rem 2rem;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(74,111,165,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-hanzi {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(5rem, 18vw, 11rem);
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: 0.15em;
+    line-height: 1;
+    opacity: 0;
+    animation: fadeUp 1.6s ease forwards 0.3s;
+    position: relative;
+  }
+
+  .hero-hanzi::after {
+    content: '';
+    display: block;
+    width: 60%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1.5rem auto 0;
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 1.2s;
+  }
+
+  .hero-subtitle-en {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: clamp(1rem, 2.5vw, 1.35rem);
+    font-style: italic;
+    color: var(--ink-light);
+    margin-top: 1.8rem;
+    letter-spacing: 0.04em;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 1s;
+  }
+
+  .hero-subtitle-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(0.85rem, 2vw, 1.05rem);
+    font-weight: 300;
+    color: var(--ink-light);
+    margin-top: 0.6rem;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: fadeUp 1.2s ease forwards 1.3s;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    animation: fadeIn 1s ease forwards 2.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    color: var(--ink-light);
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollPulse 2s ease-in-out infinite 2.5s;
+  }
+
+  /* SECTION STRUCTURE */
+  .section {
+    padding: 5rem 0;
+    border-top: 0.5px solid rgba(26,26,46,0.12);
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.9s ease, transform 0.9s ease;
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .section-num {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.75rem;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    min-width: 3rem;
+  }
+
+  .section-title-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.08em;
+  }
+
+  .section-title-en {
+    font-size: clamp(0.8rem, 2vw, 0.95rem);
+    font-style: italic;
+    color: var(--ink-light);
+    margin-left: 0.5rem;
+  }
+
+  /* TEXT RHYTHM */
+  .stanza {
+    margin-bottom: 2rem;
+  }
+
+  .line {
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    line-height: 2;
+    color: var(--ink-mid);
+    display: block;
+  }
+
+  .line-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-weight: 300;
+    font-size: clamp(0.95rem, 2.3vw, 1.1rem);
+    line-height: 2.2;
+  }
+
+  .line-indent {
+    padding-left: 2rem;
+    color: var(--ink-light);
+    font-size: 0.95em;
+  }
+
+  /* PULL QUOTE */
+  .pull-quote {
+    margin: 3rem 0;
+    padding: 2rem 2.5rem;
+    border-left: 2px solid var(--gold);
+    background: rgba(184,134,11,0.04);
+  }
+
+  .pull-quote-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(1.3rem, 4vw, 2rem);
+    font-weight: 400;
+    color: var(--ink);
+    letter-spacing: 0.12em;
+    line-height: 1.8;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .pull-quote-en {
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+  }
+
+  /* TENSION VIZ */
+  .tension-bar {
+    margin: 3rem 0;
+    padding: 2rem;
+    background: rgba(26,26,46,0.03);
+    border: 0.5px solid rgba(26,26,46,0.1);
+    border-radius: 4px;
+  }
+
+  .tension-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--ink-light);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+
+  .tension-track {
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-light), var(--gold), #c0392b);
+    border-radius: 2px;
+    position: relative;
+    margin-bottom: 0.75rem;
+  }
+
+  .tension-marker {
+    position: absolute;
+    top: -5px;
+    width: 13px;
+    height: 13px;
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    border-radius: 50%;
+    transform: translateX(-50%);
+    transition: left 1.5s ease;
+  }
+
+  .tension-caption {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* DATA CARDS */
+  .data-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .data-card {
+    padding: 1.8rem;
+    border: 0.5px solid rgba(26,26,46,0.15);
+    background: #fff;
+  }
+
+  .data-number {
+    font-family: 'EB Garamond', Georgia, serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+  }
+
+  .data-number span {
+    font-size: 1.8rem;
+    color: var(--gold);
+  }
+
+  .data-label {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.6;
+  }
+
+  .data-source {
+    font-size: 0.75rem;
+    color: var(--ink-light);
+    margin-top: 0.75rem;
+    opacity: 0.7;
+    font-style: italic;
+  }
+
+  /* GOALS GRID */
+  .goals-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 3rem 0;
+  }
+
+  .goal-card {
+    padding: 1.8rem;
+    border: 0.5px solid rgba(26,26,46,0.12);
+    position: relative;
+    background: #fff;
+  }
+
+  .goal-number {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: rgba(184,134,11,0.2);
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    line-height: 1;
+  }
+
+  .goal-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.75rem;
+    letter-spacing: 0.05em;
+  }
+
+  .goal-body {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  /* PHASES */
+  .phase-list {
+    margin: 2.5rem 0;
+    border-left: 1px solid rgba(26,26,46,0.15);
+    padding-left: 2rem;
+  }
+
+  .phase-item {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+
+  .phase-item::before {
+    content: '';
+    position: absolute;
+    left: -2.35rem;
+    top: 0.45rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--gold);
+  }
+
+  .phase-title {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 0.4rem;
+  }
+
+  .phase-body {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+    line-height: 1.8;
+  }
+
+  /* REALITY CHECK */
+  .limitation-list {
+    list-style: none;
+    margin: 2rem 0;
+  }
+
+  .limitation-list li {
+    padding: 0.9rem 0;
+    border-bottom: 0.5px solid rgba(26,26,46,0.08);
+    font-size: 1rem;
+    color: var(--ink-mid);
+    line-height: 1.7;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .limitation-list li::before {
+    content: '—';
+    color: var(--ink-light);
+    flex-shrink: 0;
+    margin-top: 0.05em;
+  }
+
+  /* CLOSING */
+  .closing {
+    padding: 7rem 0;
+    text-align: center;
+    border-top: 0.5px solid rgba(26,26,46,0.12);
+  }
+
+  .closing-zh {
+    font-family: 'Noto Serif SC', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 300;
+    color: var(--ink);
+    letter-spacing: 0.2em;
+    line-height: 1.2;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+  }
+
+  .closing.visible .closing-zh {
+    opacity: 1;
+  }
+
+  .closing-en {
+    font-style: italic;
+    color: var(--ink-light);
+    font-size: clamp(1rem, 2.5vw, 1.3rem);
+    margin-top: 1.5rem;
+    opacity: 0;
+    transition: opacity 1.2s ease 0.6s;
+  }
+
+  .closing.visible .closing-en {
+    opacity: 1;
+  }
+
+  .closing-final {
+    font-size: clamp(0.9rem, 2vw, 1.05rem);
+    color: var(--ink-light);
+    margin-top: 2.5rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.9;
+    opacity: 0;
+    transition: opacity 1.2s ease 1s;
+  }
+
+  .closing.visible .closing-final {
+    opacity: 1;
+  }
+
+  /* DIVIDER */
+  .ornament {
+    text-align: center;
+    color: var(--gold);
+    opacity: 0.5;
+    font-size: 0.9rem;
+    letter-spacing: 0.5em;
+    margin: 1.5rem 0;
+  }
+
+  /* KEYFRAMES */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 0.9; transform: scaleY(1.15); }
+  }
+
+  /* NAV */
+  .nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245,242,235,0.88);
+    backdrop-filter: blur(8px);
+    border-bottom: 0.5px solid rgba(26,26,46,0.08);
+    opacity: 0;
+    animation: fadeIn 0.8s ease forwards 2s;
+  }
+
+  .nav-logo {
+    font-family: 'Noto Serif SC', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.1em;
+    color: var(--ink);
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ink); }
+
+  /* PROGRESS */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--gold);
+    z-index: 200;
+    width: 0%;
+    transition: width 0.1s linear;
+  }
+
+  @media (max-width: 600px) {
+    .data-row, .goals-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .pull-quote { padding: 1.5rem; }
+  }
+</style>
+
+<div class="progress-bar" id="progress"></div>
+
+<nav class="nav">
+  <span class="nav-logo">同舟共济</span>
+  <ul class="nav-links">
+    <li><a href="#trap">陷阱</a></li>
+    <li><a href="#contradiction">矛盾</a></li>
+    <li><a href="#strain">压力</a></li>
+    <li><a href="#test">质疑</a></li>
+    <li><a href="#proposal">提案</a></li>
+    <li><a href="#closing">结尾</a></li>
+  </ul>
+</nav>
+
+<div style="padding-top: 0;">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-hanzi">同舟共济</div>
+    <p class="hero-subtitle-en">Rethinking U.S.–China Business Dialogue</p>
+    <p class="hero-subtitle-zh">重新思考中美工商界对话</p>
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <div class="page">
+
+    <!-- SECTION 1: TRAP -->
+    <section class="section" id="trap">
+      <div class="section-header">
+        <span class="section-num">一</span>
+        <div>
+          <span class="section-title-zh">陷阱</span>
+          <span class="section-title-en">The Trap</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">History tells us: when a rising power meets an established one,</span>
+        <span class="line">the result is often conflict.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-indent">Ancient Athens and Sparta.</span>
+        <span class="line line-indent">One ascending. One defending.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Today, many are asking — could the United States and China</span>
+        <span class="line">find themselves in a similar place?</span>
+      </div>
+
+      <div class="pull-quote">
+        <span class="pull-quote-zh" style="font-size: 1.1rem; color: var(--ink-light);">Graham Allison calls this the</span>
+        <span class="pull-quote-zh">"Thucydides Trap"</span>
+        <span class="pull-quote-en">When a rising power challenges an established one, the structural tension can become catastrophic.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">历史让我们有理由担心。</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">History gives us reason for concern.</span>
+      </div>
+      <div class="stanza">
+        <span class="line line-zh">但是，历史并不一定决定未来。</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">But history does not have to determine the future.</span>
+      </div>
+    </section>
+
+    <!-- SECTION 2: CONTRADICTION -->
+    <section class="section" id="contradiction">
+      <div class="section-header">
+        <span class="section-num">二</span>
+        <div>
+          <span class="section-title-zh">矛盾</span>
+          <span class="section-title-en">The Contradiction</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Today, the U.S.–China relationship is largely defined by competition.</span>
+        <span class="line line-indent">Trade restrictions. Technology rivalry. Strategic mistrust.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">And yet — beneath the surface — another reality persists.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-indent">Supply chains still cross both countries.</span>
+        <span class="line line-indent">Capital still flows between them.</span>
+        <span class="line line-indent">Innovation still depends on shared talent, knowledge, and infrastructure.</span>
+      </div>
+
+      <div class="ornament">· · ·</div>
+
+      <div class="pull-quote">
+        <span class="pull-quote-zh">你中有我，我中有你。</span>
+        <span class="pull-quote-en">You are in me, and I am in you.</span>
+      </div>
+
+      <div class="pull-quote" style="margin-top: 1rem;">
+        <span class="pull-quote-zh">吴越同舟。</span>
+        <span class="pull-quote-en">Two rivals, in the same boat.</span>
+      </div>
+
+      <div class="stanza" style="margin-top: 2.5rem;">
+        <span class="line">But if both countries are so deeply linked —</span>
+        <span class="line">why does it feel like they are drifting apart?</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">Is decoupling already happening?</span>
+      </div>
+    </section>
+
+    <!-- SECTION 3: STRAIN -->
+    <section class="section" id="strain">
+      <div class="section-header">
+        <span class="section-num">三</span>
+        <div>
+          <span class="section-title-zh">体系的压力</span>
+          <span class="section-title-en">A System Under Strain</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Traditionally, we assume governments manage relations between nations.</span>
+        <span class="line">But governments are focused on security, strategy, political pressures.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Businesses are different.</span>
+        <span class="line line-indent">They think about risk, opportunity, and long-term growth.</span>
+        <span class="line line-indent">They still want to develop, collaborate, and innovate.</span>
+      </div>
+
+      <div class="tension-bar">
+        <div class="tension-label">
+          <span>Interdependence</span>
+          <span>Geopolitical risk</span>
+        </div>
+        <div class="tension-track">
+          <div class="tension-marker" id="tension-marker" style="left: 30%;"></div>
+        </div>
+        <div class="tension-caption">Where businesses now operate — caught between economic logic and political pressure</div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">The problem: there is no stable, trusted platform</span>
+        <span class="line">where businesses, investors, and researchers from both sides</span>
+        <span class="line">can openly discuss these tensions.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">我们原本依赖的体系，正在承受越来越大的压力。</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">The systems we once relied on are under growing strain.</span>
+      </div>
+    </section>
+
+    <!-- SECTION 4: PRESSURE TEST -->
+    <section class="section" id="test">
+      <div class="section-header">
+        <span class="section-num">四</span>
+        <div>
+          <span class="section-title-zh">质疑</span>
+          <span class="section-title-en">Pressure Test</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">Any honest proposal must face hard questions.</span>
+      </div>
+
+      <div class="data-row">
+        <div class="data-card">
+          <div class="data-number">82<span>%</span></div>
+          <div class="data-label">of U.S. companies operating in China were still profitable in 2024.</div>
+          <div class="data-source">USCBC Survey, 2025</div>
+        </div>
+        <div class="data-card">
+          <div class="data-number">&lt;50<span>%</span></div>
+          <div class="data-label">remained optimistic about the future of their business in China.</div>
+          <div class="data-source">USCBC Survey, 2025</div>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line" style="font-style: italic; color: var(--gold);">Profits remain. Confidence has faltered.</span>
+        <span class="line" style="color: var(--ink-light);">And confidence tends to predict the future before profits do.</span>
+      </div>
+
+      <div class="stanza" style="margin-top: 2rem;">
+        <span class="line">A 2025 study found that declining bilateral trade figures</span>
+        <span class="line">may not capture the full picture — much trade now routes through</span>
+        <span class="line line-indent">Mexico, Vietnam, South Korea, and other third countries.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line" style="font-style: italic;">Decoupling has not disappeared. It has only been obscured.</span>
+      </div>
+
+      <div class="stanza" style="margin-top: 2rem;">
+        <span class="line">In technology — chips, AI, advanced manufacturing —</span>
+        <span class="line">decoupling is already underway, and likely irreversible.</span>
+        <span class="line line-indent">Here, competition is closer to zero-sum.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">这些都不是理论问题。而是真实存在的限制。</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">These are not theoretical problems. They are real constraints.</span>
+      </div>
+    </section>
+
+    <!-- SECTION 5: PROPOSAL -->
+    <section class="section" id="proposal">
+      <div class="section-header">
+        <span class="section-num">五</span>
+        <div>
+          <span class="section-title-zh">提案</span>
+          <span class="section-title-en">The Proposal</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">If governments have their limits,</span>
+        <span class="line">and markets alone are not enough —</span>
+        <span class="line" style="font-style: italic;">what is missing?</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">We propose a dialogue platform for businesses, investors, and academic institutions.</span>
+        <span class="line">Not ideological. Focused on practical cooperation and coordination.</span>
+        <span class="line">Not to replace government. To complement it.</span>
+      </div>
+
+      <div class="goals-grid">
+        <div class="goal-card">
+          <div class="goal-number">一</div>
+          <div class="goal-title">Find common ground</div>
+          <div class="goal-body">Identify areas still open to collaboration — green energy, medical technology, supply chain stability — while clarifying red lines so companies can assess risk clearly.</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-number">二</div>
+          <div class="goal-title">Bridge the information gap</div>
+          <div class="goal-body">Help businesses understand each other's institutions, policies, and commercial cultures. Many cross-border failures stem not from malice but from misunderstanding.</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-number">三</div>
+          <div class="goal-title">Shift public narratives</div>
+          <div class="goal-body">Through short video and storytelling, show the similarities and differences between U.S. and Chinese enterprises. Reduce stereotypes. Build more complete understanding.</div>
+        </div>
+        <div class="goal-card">
+          <div class="goal-number">四</div>
+          <div class="goal-title">Build lasting dialogue</div>
+          <div class="goal-body">Not a one-time conference, but a sustained process of exchange — so that relationships can form slowly, and trust can develop over time.</div>
+        </div>
+      </div>
+
+      <div class="phase-list">
+        <div class="phase-item">
+          <div class="phase-title">Phase 1 — Short-form media</div>
+          <div class="phase-body">Short videos introducing real business situations from both sides. Accessible, human, concrete.</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-title">Phase 2 — Small-group dialogue</div>
+          <div class="phase-body">Intimate conversations among entrepreneurs, investors, and researchers. Depth over scale.</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-title">Phase 3 — Working groups</div>
+          <div class="phase-body">Sector-specific groups to address concrete challenges: regulatory interpretation, contract norms, labor practices.</div>
+        </div>
+        <div class="phase-item">
+          <div class="phase-title">Phase 4 — Academic partnership</div>
+          <div class="phase-body">Collaboration with universities for more systematic research, grounding the dialogue in evidence.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: REALITY CHECK -->
+    <section class="section" id="reality">
+      <div class="section-header">
+        <span class="section-num">六</span>
+        <div>
+          <span class="section-title-zh">现实限制</span>
+          <span class="section-title-en">Reality Check</span>
+        </div>
+      </div>
+
+      <div class="stanza">
+        <span class="line">This approach has real limitations. We do not minimize them.</span>
+      </div>
+
+      <ul class="limitation-list">
+        <li>Strategic competition between the U.S. and China will not disappear. Government policies — export controls, investment restrictions — may constrain collaboration regardless of good intentions.</li>
+        <li>The media environment on both sides may continue to deepen mistrust, regardless of what any platform does.</li>
+        <li>Businesses may be reluctant to participate if benefits are unclear — or if participation carries reputational or political risk.</li>
+        <li>Similar dialogue platforms already exist. This proposal does not replace them, and cannot by itself change the international environment.</li>
+        <li>In China specifically, the space available for companies to engage openly with foreign counterparts may be constrained in ways that are difficult to anticipate.</li>
+      </ul>
+
+      <div class="stanza" style="margin-top: 2rem;">
+        <span class="line" style="font-style: italic;">But perhaps that is not the most important question.</span>
+        <span class="line">The absence of a stable platform is itself a problem worth addressing.</span>
+        <span class="line">Even partial, imperfect dialogue is better than its absence.</span>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- CLOSING -->
+  <section class="closing section" id="closing">
+    <div class="closing-zh">同舟共济</div>
+    <p class="closing-en">In the same boat, we row together.</p>
+    <p class="closing-final">
+      The question is not whether the U.S. and China will compete. They will.<br><br>
+      The real question is whether competition must become conflict —<br>
+      or whether, through new forms of dialogue, we can find space for cooperation within rivalry.<br><br>
+      <span style="font-family: 'Noto Serif SC', serif; font-weight: 300; letter-spacing: 0.1em; color: var(--gold);">如果两国真的在同一条船上，那么失败不会是各自的。而是共同的。</span>
+    </p>
+  </section>
+
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+  const progress = document.getElementById('progress');
+  const marker = document.getElementById('tension-marker');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) e.target.classList.add('visible');
+    });
+  }, { threshold: 0.12 });
+
+  sections.forEach(s => observer.observe(s));
+
+  window.addEventListener('scroll', () => {
+    const scrolled = window.scrollY;
+    const total = document.body.scrollHeight - window.innerHeight;
+    progress.style.width = Math.min(100, (scrolled / total) * 100) + '%';
+
+    const strainSection = document.getElementById('strain');
+    if (strainSection) {
+      const rect = strainSection.getBoundingClientRect();
+      if (rect.top < window.innerHeight * 0.6) {
+        marker.style.left = '65%';
+      }
+    }
+  });
+</script>
