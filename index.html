@@ -1,1147 +1,1249 @@
-
-<style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap');
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --ink: #1a1a2e;
-    --ink-mid: #2d2d4e;
-    --ink-light: #4a4a6a;
-    --mist: #e8e4dc;
-    --paper: #f5f2eb;
-    --gold: #b8860b;
-    --gold-light: #d4a843;
-    --accent: #4a6fa5;
-    --accent-light: #7a9fd4;
-    --fade: rgba(26,26,46,0.08);
-  }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: 'EB Garamond', Georgia, serif;
-    overflow-x: hidden;
-  }
-
-  .page {
-    max-width: 860px;
-    margin: 0 auto;
-    padding: 0 2rem;
-  }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    position: relative;
-    padding: 4rem 2rem;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 80% 60% at 50% 60%, rgba(74,111,165,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
-
-  .hero-hanzi {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(5rem, 18vw, 11rem);
-    font-weight: 300;
-    color: var(--ink);
-    letter-spacing: 0.15em;
-    line-height: 1;
-    opacity: 0;
-    animation: fadeUp 1.6s ease forwards 0.3s;
-    position: relative;
-  }
-
-  .hero-hanzi::after {
-    content: '';
-    display: block;
-    width: 60%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    margin: 1.5rem auto 0;
-    opacity: 0;
-    animation: fadeIn 1s ease forwards 1.2s;
-  }
-
-  .hero-subtitle-en {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: clamp(1rem, 2.5vw, 1.35rem);
-    font-style: italic;
-    color: var(--ink-light);
-    margin-top: 1.8rem;
-    letter-spacing: 0.04em;
-    opacity: 0;
-    animation: fadeUp 1.2s ease forwards 1s;
-  }
-
-  .hero-subtitle-zh {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(0.85rem, 2vw, 1.05rem);
-    font-weight: 300;
-    color: var(--ink-light);
-    margin-top: 0.6rem;
-    letter-spacing: 0.1em;
-    opacity: 0;
-    animation: fadeUp 1.2s ease forwards 1.3s;
-  }
-
-  .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    animation: fadeIn 1s ease forwards 2.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-    color: var(--ink-light);
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--gold), transparent);
-    animation: scrollPulse 2s ease-in-out infinite 2.5s;
-  }
-
-  /* SECTION STRUCTURE */
-  .section {
-    padding: 5rem 0;
-    border-top: 0.5px solid rgba(26,26,46,0.12);
-    opacity: 0;
-    transform: translateY(30px);
-    transition: opacity 0.9s ease, transform 0.9s ease;
-  }
-
-  .section.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  .section-header {
-    display: flex;
-    align-items: baseline;
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>同舟共济：重新思考中美工商界对话</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;400;600;700&display=swap');
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #171827;
+      --ink-mid: #2d2e48;
+      --ink-light: #5c5e76;
+      --paper: #f5f2eb;
+      --card: #fffdf8;
+      --gold: #b8860b;
+      --gold-soft: rgba(184, 134, 11, 0.12);
+      --blue: #405f91;
+      --blue-soft: rgba(64, 95, 145, 0.10);
+      --red-soft: rgba(145, 54, 54, 0.10);
+      --line: rgba(23, 24, 39, 0.13);
+      --shadow: 0 24px 70px rgba(23, 24, 39, 0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(circle at top, rgba(64,95,145,0.08), transparent 38rem), var(--paper);
+      color: var(--ink);
+      font-family: 'Noto Serif SC', 'Songti SC', 'SimSun', serif;
+      overflow-x: hidden;
+    }
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--blue));
+      z-index: 200;
+      transition: width 0.1s linear;
+    }
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 120;
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(245,242,235,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(23,24,39,0.08);
+      opacity: 0;
+      animation: fadeIn 0.8s ease forwards 1.9s;
+    }
+    .nav-logo {
+      font-size: 1.05rem;
+      font-weight: 400;
+      letter-spacing: 0.13em;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .nav-links {
+      display: flex;
+      gap: 1.05rem;
+      list-style: none;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 0.8rem;
+      color: var(--ink-light);
+      text-decoration: none;
+      letter-spacing: 0.07em;
+      transition: color 0.2s ease;
+      white-space: nowrap;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 12% 8%;
+      border: 1px solid rgba(184,134,11,0.08);
+      border-radius: 999px;
+      pointer-events: none;
+    }
+    .hero-hanzi {
+      font-size: clamp(4.4rem, 15vw, 10.5rem);
+      font-weight: 300;
+      letter-spacing: 0.16em;
+      line-height: 1;
+      opacity: 0;
+      animation: fadeUp 1.5s ease forwards 0.25s;
+    }
+    .hero-hanzi::after {
+      content: '';
+      display: block;
+      height: 1px;
+      width: 64%;
+      margin: 1.5rem auto 0;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 1.05s;
+    }
+    .hero-subtitle {
+      margin-top: 1.4rem;
+      font-size: clamp(1rem, 2.8vw, 1.25rem);
+      font-weight: 300;
+      color: var(--ink-light);
+      letter-spacing: 0.13em;
+      opacity: 0;
+      animation: fadeUp 1.1s ease forwards 1s;
+    }
+    .hero-question {
+      max-width: 720px;
+      margin-top: 3.1rem;
+      color: var(--ink-mid);
+      font-size: clamp(1rem, 2.4vw, 1.28rem);
+      line-height: 2.05;
+      opacity: 0;
+      animation: fadeUp 1.2s ease forwards 1.35s;
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 2.2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--ink-light);
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      opacity: 0;
+      animation: fadeIn 1s ease forwards 2.1s;
+    }
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite 2.4s;
+    }
+    .page {
+      max-width: 940px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    .section {
+      padding: 5.5rem 0;
+      border-top: 1px solid var(--line);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.85s ease, transform 0.85s ease;
+    }
+    .section.visible { opacity: 1; transform: translateY(0); }
+    .section-header {
+      display: grid;
+      grid-template-columns: 3.7rem 1fr;
+      gap: 1rem;
+      align-items: end;
+      margin-bottom: 2.6rem;
+    }
+    .section-num {
+      color: var(--gold);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      padding-bottom: 0.3rem;
+    }
+    .section-title {
+      font-size: clamp(1.65rem, 4.5vw, 2.4rem);
+      font-weight: 400;
+      letter-spacing: 0.08em;
+    }
+    .stanza { margin-bottom: 2rem; }
+    .line {
+      display: block;
+      font-size: clamp(1rem, 2.3vw, 1.16rem);
+      line-height: 2.15;
+      color: var(--ink-mid);
+      font-weight: 300;
+    }
+    .line-small {
+      display: block;
+      font-size: 0.92rem;
+      line-height: 1.9;
+      color: var(--ink-light);
+      font-weight: 300;
+    }
+    .indent { padding-left: 2rem; color: var(--ink-light); }
+    .lead-card, .note-card, .question-card {
+      margin: 2.6rem 0;
+      padding: 2rem 2.2rem;
+      border: 1px solid rgba(23,24,39,0.11);
+      background: linear-gradient(135deg, rgba(255,253,248,0.92), rgba(255,253,248,0.70));
+      box-shadow: var(--shadow);
+      border-radius: 18px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .lead-card.animate, .note-card.animate, .question-card.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .lead-card { border-left: 4px solid var(--gold); }
+    .note-card { border-left: 4px solid var(--blue); }
+    .question-card { border-left: 4px solid #913636; background: linear-gradient(135deg, var(--red-soft), rgba(255,253,248,0.92)); }
+    .quote {
+      margin: 3rem auto;
+      padding: 2.2rem 2.6rem;
+      max-width: 760px;
+      text-align: center;
+      position: relative;
+      background: rgba(184,134,11,0.055);
+      border-top: 1px solid rgba(184,134,11,0.25);
+      border-bottom: 1px solid rgba(184,134,11,0.25);
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .quote.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .quote::before, .quote::after {
+      content: '“';
+      position: absolute;
+      color: rgba(184,134,11,0.08);
+      font-size: 3.2rem;
+      line-height: 1;
+      top: 0.5rem;
+    }
+    .quote::before { left: 0.8rem; }
+    .quote::after { content: '"'; right: 0.8rem; bottom: 0; top: auto; }
+    .quote-text {
+      font-size: clamp(1.35rem, 4vw, 2.15rem);
+      line-height: 1.75;
+      letter-spacing: 0.08em;
+      font-weight: 400;
+      color: var(--ink);
+    }
+    .visual-separator {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin: 3rem 0;
+      color: var(--gold);
+      opacity: 0.68;
+      letter-spacing: 0.4em;
+      justify-content: center;
+    }
+    .visual-separator::before, .visual-separator::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, rgba(184,134,11,0.65), transparent);
+    }
+    .figure-row, .goal-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1.25rem;
+      margin: 3rem 0;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .figure-row.animate, .goal-grid.animate {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .figure-card, .goal-card {
+      background: var(--card);
+      border: 1px solid rgba(23,24,39,0.11);
+      border-radius: 18px;
+      padding: 1.6rem;
+      box-shadow: 0 14px 40px rgba(23,24,39,0.055);
+      position: relative;
+      overflow: hidden;
+    }
+    .figure-card::after, .goal-card::after {
+      content: '';
+      position: absolute;
+      right: -1.8rem;
+      top: -1.8rem;
+      width: 5.5rem;
+      height: 5.5rem;
+      border-radius: 50%;
+      background: rgba(184,134,11,0.04);
+    }
+    .figure-number {
+      font-size: clamp(2.7rem, 8vw, 4.4rem);
+      line-height: 1;
+      color: var(--ink);
+      font-weight: 300;
+      letter-spacing: 0.02em;
+    }
+    .figure-label {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      color: var(--ink-light);
+      line-height: 1.85;
+    }
+    .figure-source {
+      margin-top: 0.8rem;
+      font-size: 0.75rem;
+      color: rgba(92,94,118,0.78);
+      line-height: 1.7;
+    }
+    .flow {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: rgba(64,95,145,0.055);
+      border: 1px solid rgba(64,95,145,0.15);
+      border-radius: 20px;
+    }
+    .flow-title {
+      font-size: 1rem;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 1.3rem;
+      letter-spacing: 0.08em;
+    }
+    .flow-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.8rem;
+    }
+    .flow-step {
+      padding: 1rem;
+      background: rgba(255,253,248,0.82);
+      border: 1px solid rgba(23,24,39,0.09);
+      border-radius: 14px;
+      text-align: center;
+      color: var(--ink-mid);
+      font-size: 0.92rem;
+      line-height: 1.75;
+      min-height: 6.2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .goal-number {
+      color: rgba(184,134,11,0.25);
+      font-size: 3rem;
+      line-height: 1;
+      position: absolute;
+      right: 1.15rem;
+      top: 1rem;
+      font-weight: 300;
+    }
+    .goal-title {
+      position: relative;
+      z-index: 1;
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      margin-bottom: 0.9rem;
+    }
+    .goal-body {
+      position: relative;
+      z-index: 1;
+      color: var(--ink-light);
+      font-size: 0.94rem;
+      line-height: 1.95;
+    }
+    .tension {
+      margin: 3rem 0;
+      padding: 2rem;
+      background: rgba(23,24,39,0.035);
+      border: 1px solid rgba(23,24,39,0.10);
+      border-radius: 20px;
+    }
+    .tension-labels {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      color: var(--ink-light);
+      font-size: 0.88rem;
+      margin-bottom: 1rem;
+    }
+    .tension-track {
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue), var(--gold), #913636);
+      position: relative;
+    }
+    .tension-marker {
+      position: absolute;
+      top: -6px;
+      left: 42%;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--paper);
+      border: 2px solid var(--ink);
+      transition: left 1.2s ease;
+    }
+    .tension-caption {
+      margin-top: 1rem;
+      text-align: center;
+      color: var(--ink-light);
+      font-size: 0.85rem;
+      line-height: 1.8;
+    }
+    .closing {
+      min-height: 80vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 6rem 2rem;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid var(--line);
+    }
+    .closing::before {
+      content: '';
+      position: absolute;
+      width: 28rem;
+      height: 28rem;
+      border-radius: 50%;
+      border: 1px solid rgba(184,134,11,0.06);
+    }
+    .closing-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+    .closing-title {
+      font-size: clamp(3rem, 11vw, 6rem);
+      font-weight: 300;
+      letter-spacing: 0.18em;
+      margin-bottom: 2rem;
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 1s ease, transform 1s ease;
+    }
+    .closing.visible .closing-title { opacity: 1; transform: translateY(0); }
+    .closing-text {
+      font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+      line-height: 2.25;
+      color: var(--ink-mid);
+      font-weight: 300;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 1s ease 0.45s, transform 1s ease 0.45s;
+    }
+    .closing.visible .closing-text { opacity: 1; transform: translateY(0); }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes scrollPulse { 0%, 100% { opacity: 0.45; transform: scaleY(1); } 50% { opacity: 1; transform: scaleY(1.18); } }
+    @keyframes slideInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.96); } to { opacity: 1; transform: scale(1); } }
+    @media (max-width: 760px) {
+      .nav-links { display: none; }
+      .page { padding: 0 1.25rem; }
+      .section { padding: 4.4rem 0; }
+      .section-header { grid-template-columns: 2.8rem 1fr; }
+      .figure-row, .goal-grid, .flow-track { grid-template-columns: 1fr; }
+      .quote { padding: 2rem 1.4rem; }
+      .lead-card, .note-card, .question-card { padding: 1.5rem; }
+      .indent { padding-left: 1rem; }
+    }
+    /* Image styles for contextual placement */
+.image-strip {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 2.2rem 0 1.8rem;
+  align-items: stretch;
+}
+.image-strip figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid rgba(23,24,39,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 8.2rem;
+  box-shadow: 0 8px 24px rgba(23,24,39,0.06);
+  transition: box-shadow 200ms ease;
+}
+.image-strip figure:hover { box-shadow: 0 12px 32px rgba(23,24,39,0.10); }
+.image-strip img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.image-pair {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  margin: 2rem 0 2.4rem;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.image-pair.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+.image-pair figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid rgba(23,24,39,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 12rem;
+  box-shadow: 0 8px 24px rgba(23,24,39,0.06);
+  transition: box-shadow 200ms ease;
+}
+.image-pair figure:hover { box-shadow: 0 12px 32px rgba(23,24,39,0.10); }
+.image-pair img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.image-feature {
+  margin: 2.8rem 0;
+  width: 100%;
+}
+.image-feature figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid rgba(23,24,39,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20rem;
+  max-width: 100%;
+  box-shadow: 0 8px 24px rgba(23,24,39,0.06);
+  transition: box-shadow 200ms ease;
+}
+.image-feature figure:hover { box-shadow: 0 12px 32px rgba(23,24,39,0.10); }
+.image-feature img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.image-single {
+  margin: 2.2rem 0;
+  max-width: 65%;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.image-single.animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+.image-single figure {
+  margin: 0;
+  background: var(--card);
+  border: 1px solid rgba(23,24,39,0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 14rem;
+  box-shadow: 0 8px 24px rgba(23,24,39,0.06);
+  transition: box-shadow 200ms ease;
+}
+.image-single figure:hover { box-shadow: 0 12px 32px rgba(23,24,39,0.10); }
+.image-single img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+@media (max-width: 880px) {
+  .image-pair {
+    grid-template-columns: 1fr;
     gap: 1rem;
-    margin-bottom: 2.5rem;
   }
-
-  .section-num {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 0.75rem;
-    font-weight: 300;
-    color: var(--gold);
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    min-width: 3rem;
+  .image-feature {
+    min-height: 15rem;
   }
-
-  .section-title-zh {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.4rem, 4vw, 2rem);
-    font-weight: 400;
-    color: var(--ink);
-    letter-spacing: 0.08em;
+  .image-feature figure {
+    min-height: 15rem;
   }
-
-  .section-title-en {
-    font-size: clamp(0.8rem, 2vw, 0.95rem);
-    font-style: italic;
-    color: var(--ink-light);
-    margin-left: 0.5rem;
+  .image-single {
+    max-width: 85%;
   }
-
-  /* TEXT RHYTHM */
-  .stanza {
-    margin-bottom: 2rem;
+}
+@media (max-width: 760px) {
+  .image-strip {
+    grid-template-columns: 1fr;
   }
-
-  .line {
-    font-size: clamp(1rem, 2.5vw, 1.2rem);
-    line-height: 2;
-    color: var(--ink-mid);
-    display: block;
+  .image-single {
+    max-width: 100%;
   }
-
-  .line-zh {
-    font-family: 'Noto Serif SC', serif;
-    font-weight: 300;
-    font-size: clamp(0.95rem, 2.3vw, 1.1rem);
-    line-height: 2.2;
+  .image-pair {
+    gap: 0.8rem;
   }
-
-  .line-indent {
-    padding-left: 2rem;
-    color: var(--ink-light);
-    font-size: 0.95em;
+}
+/* About section styles */
+.about {
+  min-height: auto;
+  display: block;
+  padding: 5.5rem 0;
+  border-top: 1px solid var(--line);
+  position: relative;
+}
+.about-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.about-title {
+  font-size: clamp(2rem, 5vw, 2.8rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.about-intro {
+  font-size: clamp(1rem, 2.3vw, 1.1rem);
+  line-height: 1.9;
+  color: var(--ink-mid);
+  max-width: 760px;
+  margin: 0 auto;
+  margin-bottom: 1.5rem;
+}
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 3rem;
+  margin-top: 3rem;
+  max-width: 840px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.team-member {
+  text-align: center;
+}
+.member-photo {
+  width: 100%;
+  max-width: 280px;
+  height: 280px;
+  margin: 0 auto 1.5rem;
+  background: var(--card);
+  border: 1px solid rgba(23,24,39,0.08);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 8px 24px rgba(23,24,39,0.06);
+}
+.member-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.member-name-en {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+  letter-spacing: 0.05em;
+}
+.member-name-zh {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--ink-light);
+  margin-bottom: 1rem;
+  letter-spacing: 0.05em;
+}
+.member-link {
+  display: inline-block;
+  margin-top: 0.8rem;
+  padding: 0.6rem 1.2rem;
+  background: rgba(64,95,145,0.08);
+  border: 1px solid rgba(64,95,145,0.2);
+  border-radius: 6px;
+  color: var(--blue);
+  text-decoration: none;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  transition: background 200ms ease, border-color 200ms ease;
+}
+.member-link:hover {
+  background: rgba(64,95,145,0.15);
+  border-color: rgba(64,95,145,0.35);
+}
+.about-footer {
+  text-align: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(23,24,39,0.08);
+  font-size: 0.9rem;
+  color: var(--ink-light);
+}
+@media (max-width: 760px) {
+  .team-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
   }
-
-  /* PULL QUOTE */
-  .pull-quote {
-    margin: 3rem 0;
-    padding: 2rem 2.5rem;
-    border-left: 2px solid var(--gold);
-    background: rgba(184,134,11,0.04);
+  .member-photo {
+    max-width: 220px;
+    height: 220px;
   }
+}
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progress"></div>
 
-  .pull-quote-zh {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(1.3rem, 4vw, 2rem);
-    font-weight: 400;
-    color: var(--ink);
-    letter-spacing: 0.12em;
-    line-height: 1.8;
-    display: block;
-    margin-bottom: 0.5rem;
-  }
+  <nav class="nav">
+    <span class="nav-logo">同舟共济</span>
+    <ul class="nav-links">
+      <li><a href="#trap">陷阱</a></li>
+      <li><a href="#contradiction">矛盾</a></li>
+      <li><a href="#strain">压力</a></li>
+      <li><a href="#test">质疑</a></li>
+      <li><a href="#proposal">提案</a></li>
+      <li><a href="#reality">现实考量</a></li>
+      <li><a href="#ending">结尾</a></li>
+    </ul>
+  </nav>
 
-  .pull-quote-en {
-    font-style: italic;
-    color: var(--ink-light);
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-  }
-
-  /* TENSION VIZ */
-  .tension-bar {
-    margin: 3rem 0;
-    padding: 2rem;
-    background: rgba(26,26,46,0.03);
-    border: 0.5px solid rgba(26,26,46,0.1);
-    border-radius: 4px;
-  }
-
-  .tension-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    color: var(--ink-light);
-    margin-bottom: 1rem;
-    font-style: italic;
-  }
-
-  .tension-track {
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-light), var(--gold), #c0392b);
-    border-radius: 2px;
-    position: relative;
-    margin-bottom: 0.75rem;
-  }
-
-  .tension-marker {
-    position: absolute;
-    top: -5px;
-    width: 13px;
-    height: 13px;
-    background: var(--paper);
-    border: 2px solid var(--ink);
-    border-radius: 50%;
-    transform: translateX(-50%);
-    transition: left 1.5s ease;
-  }
-
-  .tension-caption {
-    font-size: 0.8rem;
-    color: var(--ink-light);
-    text-align: center;
-    font-style: italic;
-  }
-
-  /* DATA CARDS */
-  .data-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 3rem 0;
-  }
-
-  .data-card {
-    padding: 1.8rem;
-    border: 0.5px solid rgba(26,26,46,0.15);
-    background: #fff;
-  }
-
-  .data-number {
-    font-family: 'EB Garamond', Georgia, serif;
-    font-size: 3.5rem;
-    font-weight: 400;
-    color: var(--ink);
-    line-height: 1;
-    margin-bottom: 0.5rem;
-  }
-
-  .data-number span {
-    font-size: 1.8rem;
-    color: var(--gold);
-  }
-
-  .data-label {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-    line-height: 1.6;
-  }
-
-  .data-source {
-    font-size: 0.75rem;
-    color: var(--ink-light);
-    margin-top: 0.75rem;
-    opacity: 0.7;
-    font-style: italic;
-  }
-
-  /* GOALS GRID */
-  .goals-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 3rem 0;
-  }
-
-  .goal-card {
-    padding: 1.8rem;
-    border: 0.5px solid rgba(26,26,46,0.12);
-    position: relative;
-    background: #fff;
-  }
-
-  .goal-number {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 2.5rem;
-    font-weight: 300;
-    color: rgba(184,134,11,0.2);
-    position: absolute;
-    top: 1rem;
-    right: 1.2rem;
-    line-height: 1;
-  }
-
-  .goal-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 0.75rem;
-    letter-spacing: 0.05em;
-  }
-
-  .goal-body {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-    line-height: 1.8;
-  }
-
-  /* PHASES */
-  .phase-list {
-    margin: 2.5rem 0;
-    border-left: 1px solid rgba(26,26,46,0.15);
-    padding-left: 2rem;
-  }
-
-  .phase-item {
-    margin-bottom: 2rem;
-    position: relative;
-  }
-
-  .phase-item::before {
-    content: '';
-    position: absolute;
-    left: -2.35rem;
-    top: 0.45rem;
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--gold);
-  }
-
-  .phase-title {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 0.95rem;
-    font-weight: 400;
-    color: var(--ink);
-    margin-bottom: 0.4rem;
-  }
-
-  .phase-body {
-    font-size: 0.9rem;
-    color: var(--ink-light);
-    line-height: 1.8;
-  }
-
-  /* REALITY CHECK */
-  .limitation-list {
-    list-style: none;
-    margin: 2rem 0;
-  }
-
-  .limitation-list li {
-    padding: 0.9rem 0;
-    border-bottom: 0.5px solid rgba(26,26,46,0.08);
-    font-size: 1rem;
-    color: var(--ink-mid);
-    line-height: 1.7;
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .limitation-list li::before {
-    content: '—';
-    color: var(--ink-light);
-    flex-shrink: 0;
-    margin-top: 0.05em;
-  }
-
-  /* CLOSING */
-  .closing {
-    padding: 7rem 0;
-    text-align: center;
-    border-top: 0.5px solid rgba(26,26,46,0.12);
-  }
-
-  .closing-zh {
-    font-family: 'Noto Serif SC', serif;
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 300;
-    color: var(--ink);
-    letter-spacing: 0.2em;
-    line-height: 1.2;
-    opacity: 0;
-    transition: opacity 1.2s ease;
-  }
-
-  .closing.visible .closing-zh {
-    opacity: 1;
-  }
-
-  .closing-en {
-    font-style: italic;
-    color: var(--ink-light);
-    font-size: clamp(1rem, 2.5vw, 1.3rem);
-    margin-top: 1.5rem;
-    opacity: 0;
-    transition: opacity 1.2s ease 0.6s;
-  }
-
-  .closing.visible .closing-en {
-    opacity: 1;
-  }
-
-  .closing-final {
-    font-size: clamp(0.9rem, 2vw, 1.05rem);
-    color: var(--ink-light);
-    margin-top: 2.5rem;
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.9;
-    opacity: 0;
-    transition: opacity 1.2s ease 1s;
-  }
-
-  .closing.visible .closing-final {
-    opacity: 1;
-  }
-
-  /* DIVIDER */
-  .ornament {
-    text-align: center;
-    color: var(--gold);
-    opacity: 0.5;
-    font-size: 0.9rem;
-    letter-spacing: 0.5em;
-    margin: 1.5rem 0;
-  }
-
-  /* KEYFRAMES */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to   { opacity: 1; }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 0.9; transform: scaleY(1.15); }
-  }
-
-  /* NAV */
-  .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(245,242,235,0.88);
-    backdrop-filter: blur(8px);
-    border-bottom: 0.5px solid rgba(26,26,46,0.08);
-    opacity: 0;
-    animation: fadeIn 0.8s ease forwards 2s;
-  }
-
-  .nav-logo {
-    font-family: 'Noto Serif SC', serif;
-    font-size: 1.1rem;
-    font-weight: 300;
-    letter-spacing: 0.1em;
-    color: var(--ink);
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.8rem;
-    color: var(--ink-light);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--ink); }
-
-  /* PROGRESS */
-  .progress-bar {
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    background: var(--gold);
-    z-index: 200;
-    width: 0%;
-    transition: width 0.1s linear;
-  }
-
-  /* ENHANCED VISUALS */
-  .accent-block {
-    background: linear-gradient(135deg, rgba(184,134,11,0.08), rgba(74,111,165,0.06));
-    padding: 2rem;
-    border-radius: 8px;
-    margin: 2rem 0;
-    border-left: 3px solid var(--gold);
-  }
-
-  .visual-separator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin: 3rem 0;
-    opacity: 0.4;
-  }
-
-  .visual-separator::before,
-  .visual-separator::after {
-    content: '';
-    flex: 1;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, var(--gold), transparent);
-  }
-
-  .visual-separator span {
-    font-size: 0.8rem;
-    color: var(--gold);
-    letter-spacing: 0.2em;
-  }
-
-  .stat-highlight {
-    font-size: 2rem;
-    color: var(--gold);
-    font-weight: 300;
-    font-family: 'EB Garamond', serif;
-  }
-
-  .emphasis-text {
-    color: var(--accent);
-    font-weight: 400;
-    font-style: italic;
-  }
-
-  .highlight-zh {
-    background: linear-gradient(120deg, rgba(184,134,11,0.1), transparent);
-    padding: 0.1rem 0.3rem;
-  }
-
-  @keyframes slideIn {
-    from { opacity: 0; transform: translateX(-20px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  @keyframes glow {
-    0%, 100% { text-shadow: 0 0 10px rgba(184,134,11,0.3); }
-    50% { text-shadow: 0 0 20px rgba(184,134,11,0.5); }
-  }
-
-  .animated-stat {
-    animation: slideIn 0.8s ease forwards;
-  }
-
-  @media (max-width: 600px) {
-    .data-row, .goals-grid { grid-template-columns: 1fr; }
-    .nav-links { display: none; }
-    .pull-quote { padding: 1.5rem; }
-  }
-</style>
-
-<div class="progress-bar" id="progress"></div>
-
-<nav class="nav">
-  <span class="nav-logo">同舟共济</span>
-  <ul class="nav-links">
-    <li><a href="#trap">陷阱</a></li>
-    <li><a href="#contradiction">矛盾</a></li>
-    <li><a href="#strain">压力</a></li>
-    <li><a href="#test">质疑</a></li>
-    <li><a href="#proposal">提案</a></li>
-    <li><a href="#reality">限制</a></li>
-    <li><a href="#closing">结尾</a></li>
-  </ul>
-</nav>
-
-<div style="padding-top: 0;">
-
-  <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="hero-hanzi">同舟共济</div>
-    <p class="hero-subtitle-en">Rethinking U.S.–China Business Dialogue</p>
-    <p class="hero-subtitle-zh">重新思考中美工商界对话</p>
+    <p class="hero-subtitle">重新思考中美工商界对话</p>
+    <p class="hero-question">当竞争成为现实，我们是否还能在同一条船上寻找合作的方向？</p>
     <div class="scroll-hint">
-      <span>Scroll</span>
+      <span>向下滚动</span>
       <div class="scroll-line"></div>
     </div>
   </section>
 
-  <div class="page">
-
-    <!-- SECTION 1: TRAP -->
+  <main class="page">
     <section class="section" id="trap">
       <div class="section-header">
-        <span class="section-num">一</span>
-        <div>
-          <span class="section-title-zh">陷阱</span>
-          <span class="section-title-en">The Trap</span>
-        </div>
+        <span class="section-num">第一部分</span>
+        <h2 class="section-title">陷阱</h2>
       </div>
 
-      <div class="accent-block">
-        <span class="line line-zh" style="font-size: 1.15rem; font-weight: 400;">历史告诉我们，当一个正在崛起的国家遇到一个已经强大的国家时，结果往往是冲突。</span>
-        <br>
-        <span class="line" style="margin-top: 1rem;">History tells us: when a rising power meets an established one, the result is often conflict.</span>
+      <div class="lead-card">
+        <span class="line">历史告诉我们，当一个正在崛起的国家遇到一个已经强大的国家时，结果往往是冲突。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-indent">古代的雅典和斯巴达。</span>
-        <span class="line line-indent">Ancient Athens and Sparta.</span>
-        <br>
-        <span class="line line-indent">一个在上升，一个在防守。</span>
-        <span class="line line-indent">One ascending. One defending.</span>
-      </div>
-
-      <div class="visual-separator">
-        <span>·</span>
+        <span class="line indent">古代的雅典和斯巴达。</span>
+        <span class="line indent">一个在上升，一个在防守。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">今天，很多人开始思考：美国和中国会不会进入类似的局面？</span>
-        <span class="line" style="margin-top: 0.8rem;">Today, many begin to ask: Could the United States and China enter a similar situation?</span>
+        <span class="line">今天，很多人开始思考：</span>
+        <span class="line">美国和中国会不会进入类似的局面？</span>
       </div>
 
-      <div class="pull-quote">
-        <span class="pull-quote-zh">修昔底德陷阱</span>
-        <span class="pull-quote-en" style="display: block; margin-top: 0.5rem;">The Thucydides Trap</span>
-        <span class="pull-quote-en" style="font-style: normal; margin-top: 1rem; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.7;">When a rising power challenges an established one, structural tensions can produce catastrophic conflict. Harvard economist Graham Allison coined this term after studying 16 cases of power transitions in history.</span>
-      </div>
+      <div class="quote"><div class="quote-text">修昔底德陷阱</div></div>
 
       <div class="stanza">
-        <span class="line line-zh" style="color: var(--accent);">历史让我们有理由担心。</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">History gives us reason for concern.</span>
+        <span class="line">哈佛大学经济学教授格雷厄姆·艾利森把这种情况称为“修昔底德陷阱”，</span>
+        <span class="line">也就是当一个新兴大国挑战一个既有大国时，往往会产生巨大的紧张关系。</span>
       </div>
 
-      <div class="stanza">
-        <span class="line line-zh" style="color: var(--gold); font-weight: 400;">但是，历史并不一定决定未来。</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light); font-weight: 400;">But history does not have to determine the future.</span>
+      <div class="visual-separator"><span>舟</span></div>
+      <div class="image-single">
+        <figure><img src="assets/images/thucydides-statue.jpg" alt="修昔底德雕像"></figure>
       </div>
 
+
       <div class="stanza">
-        <span class="line line-zh">中美关系的未来，还没有被写下。</span>
-        <span class="line">The future of U.S.–China relations has not yet been written.</span>
+        <span class="line">历史让我们有理由担心。</span>
+        <span class="line">但是，历史并不一定决定未来。</span>
+        <span class="line">中美关系的未来，还没有被写下。</span>
       </div>
     </section>
 
-    <!-- SECTION 2: CONTRADICTION -->
     <section class="section" id="contradiction">
       <div class="section-header">
-        <span class="section-num">二</span>
-        <div>
-          <span class="section-title-zh">矛盾</span>
-          <span class="section-title-en">The Contradiction</span>
-        </div>
+        <span class="section-num">第二部分</span>
+        <h2 class="section-title">矛盾</h2>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">今天，中美关系在很大程度上由竞争来定义。</span>
-        <span class="line">Today, the U.S.–China relationship is largely defined by competition.</span>
-        <br>
-        <span class="line line-indent line-zh">贸易保护。科技竞争。战略上的不信任。</span>
-        <span class="line line-indent">Trade protection. Technology competition. Strategic distrust.</span>
+        <span class="line">今天，中美关系在很大程度上由竞争来定义。</span>
+        <span class="line indent">贸易保护。</span>
+        <span class="line indent">科技竞争。</span>
+        <span class="line indent">战略上的不信任。</span>
+      </div>
+
+      <div class="question-card">
+        <span class="line">在两国社会中，越来越多的声音把对方看成一种威胁，而不仅仅是竞争对手。</span>
+        <span class="line">这种情况让不信任感不断加深，</span>
+        <span class="line">不仅在政府之间，也在普通民众之间。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">在两国社会中，越来越多的声音把对方看成一种威胁，而不仅仅是竞争对手。</span>
-        <span class="line">In both societies, more voices see the other not just as a rival, but as a threat.</span>
-        <br>
-        <span class="line line-zh">这种情况让不信任感不断加深。</span>
-        <span class="line">This deepens mistrust — not just between governments, but among ordinary people.</span>
+        <span class="line">但是，在表面之下，还有另一种现实。</span>
       </div>
 
-      <div class="visual-separator">
-        <span>·</span>
+      <div class="note-card">
+        <span class="line">虽然关系日益紧张，中美之间依然存在很深的联系。</span>
+        <span class="line">供应链仍然跨越两国。</span>
+        <span class="line">资金仍然在两国之间流动。</span>
+        <span class="line">创新的发展也依赖人才、知识和基础设施的共享。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh" style="font-style: italic; color: var(--accent);">但是，在表面之下，还有另一种现实。</span>
-        <span class="line" style="font-style: italic; color: var(--accent);">But beneath the surface — another reality persists.</span>
+        <span class="line">麻省理工学院经济学教授黄亚生认为，这种关系远比简单的竞争更加复杂。</span>
       </div>
 
-      <div class="accent-block">
-        <span class="line line-zh">虽然关系日益紧张，中美之间依然存在很深的联系。供应链仍然跨越两国。资金仍然在两国之间流动。创新的发展也依赖人才、知识和基础设施的共享。</span>
-        <span class="line" style="margin-top: 1rem;">Despite mounting tensions, deep connections remain between the two nations. Supply chains still cross borders. Capital still flows. Innovation still depends on shared talent, knowledge, and infrastructure.</span>
+      <div class="quote"><div class="quote-text">你中有我，我中有你。</div></div>
+      <div class="quote"><div class="quote-text">吴越同舟。</div></div>
+
+      <div class="image-pair">
+        <figure><img src="assets/images/book-allison.jpg" alt="艾利森著作《注定一战》"></figure>
+        <figure><img src="assets/images/ministers.jpeg" alt="部长会晤"></figure>
       </div>
 
-      <div class="pull-quote">
-        <span class="pull-quote-zh" style="font-size: 1.4rem;">你中有我，我中有你。</span>
-        <span class="pull-quote-en">You are in me, and I am in you.</span>
+      <div class="stanza">
+        <span class="line">两个对手，却在同一条船上。</span>
       </div>
 
-      <div class="pull-quote" style="margin-top: 1.5rem;">
-        <span class="pull-quote-zh" style="font-size: 1.4rem;">吴越同舟。</span>
-        <span class="pull-quote-en">Two rivals, in the same boat.</span>
+      <div class="stanza">
+        <span class="line">但如果真是这样，</span>
+        <span class="line">如果两国联系如此紧密，</span>
+        <span class="line">为什么我们却感觉它们在渐渐远离？</span>
       </div>
 
-      <div class="stanza" style="margin-top: 2.5rem;">
-        <span class="line line-zh">但如果真是这样，如果两国联系如此紧密，为什么我们却感觉它们在渐渐远离？</span>
-        <span class="line">But if both are so deeply linked — why does it feel like they are drifting apart?</span>
-        <br>
-        <span class="line line-zh" style="font-style: italic; color: var(--ink-light); margin-top: 1rem;">这种相互依存关系是不是正在减弱？"脱钩"是不是已经在发生？如果是这样，这意味着什么？</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">Is interdependence weakening? Is decoupling already happening? And what does this mean?</span>
+      <div class="question-card">
+        <span class="line">这种相互依存关系是不是正在减弱？</span>
+        <span class="line">“脱钩”是不是已经在发生？</span>
+        <span class="line">如果是这样，这意味着什么？</span>
       </div>
     </section>
 
-    <!-- SECTION 3: STRAIN -->
     <section class="section" id="strain">
       <div class="section-header">
-        <span class="section-num">三</span>
-        <div>
-          <span class="section-title-zh">体系的压力</span>
-          <span class="section-title-en">A System Under Strain</span>
+        <span class="section-num">第三部分</span>
+        <h2 class="section-title">体系的压力</h2>
+      </div>
+
+      <div class="stanza">
+        <span class="line">传统上，我们认为政府会处理国家之间的关系。</span>
+        <span class="line">但政府更多关注的是安全、战略和政治压力。</span>
+      </div>
+
+      <div class="note-card">
+        <span class="line">企业则不同。</span>
+        <span class="line">它们关注的是风险、机会，以及长期发展。</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">而现在，这两个世界正在慢慢分离。</span>
+      </div>
+
+      <div class="tension">
+        <div class="tension-labels">
+          <span>经济机会</span>
+          <span>政治压力</span>
         </div>
+        <div class="tension-track"><div class="tension-marker" id="tensionMarker"></div></div>
+        <div class="tension-caption">企业正在风险、机会与地缘政治压力之间移动。</div>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">传统上，我们认为政府会处理国家之间的关系。</span>
-        <span class="line">Traditionally, we think governments manage relations between nations.</span>
-        <br>
-        <span class="line line-zh">但政府更多关注的是安全、战略和政治压力。</span>
-        <span class="line">But governments focus on security, strategy, and political pressure.</span>
+        <span class="line">梅格·里思迈尔等学者指出，政治紧张正在改变企业跨国运作的方式。</span>
+        <span class="line">公司面对越来越多的不确定性。</span>
+        <span class="line">更复杂的政策环境。</span>
+        <span class="line">以及更高的地缘政治风险。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">企业则不同。</span>
-        <span class="line">Businesses are different.</span>
-        <br>
-        <span class="line line-indent line-zh">它们关注的是风险、机会，以及长期发展。</span>
-        <span class="line line-indent">They think about risk, opportunity, and long-term growth.</span>
+        <span class="line">但与此同时，它们仍然希望发展、合作和创新。</span>
       </div>
+
+      <div class="lead-card">
+        <span class="line">问题在于：</span>
+        <span class="line">目前没有一个稳定、可信的平台，</span>
+        <span class="line">让不同国家的企业、投资者和研究者可以公开交流这些问题。</span>
+      </div>
+
+      <div class="quote"><div class="quote-text">没有一个共同的空间</div></div>
 
       <div class="stanza">
-        <span class="line line-zh">而现在，这两个世界正在慢慢分离。</span>
-        <span class="line" style="font-style: italic; color: var(--accent);">And now, these two worlds are slowly separating.</span>
-      </div>
-
-      <div class="accent-block">
-        <span class="line" style="color: var(--ink-mid);">Scholars like Meg Rithmire point out that political tensions are changing how corporations operate globally. Businesses face:</span>
-        <br>
-        <span class="line line-indent" style="margin-top: 1rem;">• Growing uncertainty</span>
-        <span class="line line-indent">• More complex policy environments</span>
-        <span class="line line-indent">• Rising geopolitical risks</span>
-        <br>
-        <span class="line" style="margin-top: 1rem;">Yet companies still want to develop, collaborate, and innovate.</span>
-      </div>
-
-      <div class="tension-bar">
-        <div class="tension-label">
-          <span>Economic logic</span>
-          <span>Political pressure</span>
-        </div>
-        <div class="tension-track">
-          <div class="tension-marker" id="tension-marker" style="left: 40%;"></div>
-        </div>
-        <div class="tension-caption">Where businesses now operate — caught between economic opportunity and government constraint</div>
-      </div>
-
-      <div class="stanza">
-        <span class="line line-zh" style="font-weight: 400;">问题在于：目前没有一个稳定、可信的平台，让不同国家的企业、投资者和研究者可以公开交流这些问题。</span>
-        <span class="line" style="margin-top: 1rem;">The problem: no stable, trusted platform exists where businesses, investors, and researchers can openly discuss these tensions.</span>
-      </div>
-
-      <div class="pull-quote">
-        <span class="pull-quote-zh">没有一个共同的空间，让大家可以更好地理解风险、机会和彼此的期待。</span>
-        <span class="pull-quote-en">No shared space to understand risk, opportunity, and mutual expectations.</span>
-      </div>
-
-      <div class="stanza" style="margin-top: 2.5rem;">
-        <span class="line line-zh">我们原本依赖的体系，正在承受越来越大的压力。</span>
-        <span class="line">The systems we once relied on are under growing strain.</span>
+        <span class="line">没有一个共同的空间，</span>
+        <span class="line">让大家可以更好地理解风险、机会和彼此的期待。</span>
+        <span class="line">我们原本依赖的体系，正在承受越来越大的压力。</span>
       </div>
     </section>
 
-    <!-- SECTION 4: PRESSURE TEST -->
     <section class="section" id="test">
       <div class="section-header">
-        <span class="section-num">四</span>
-        <div>
-          <span class="section-title-zh">质疑</span>
-          <span class="section-title-en">Pressure Test</span>
+        <span class="section-num">第四部分</span>
+        <h2 class="section-title">质疑</h2>
+      </div>
+      
+      <div class="image-single">
+        <figure><img src="assets/images/jensen-huang.jpg" alt="半导体与科技竞争"></figure>
+      </div>
+
+      <div class="question-card">
+        <span class="line">即使我们尝试建立新的平台，也必须面对一些重要的质疑。</span>
+        <span class="line">我们是不是高估了企业在国家竞争中的作用？</span>
+        <span class="line">在历史上，经济上的相互依存，真的能防止冲突吗？</span>
+        <span class="line">还是有时候也会失败？</span>
+        <span class="line">如果结构性的力量如此强大，对话真的能改变结果吗？</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">但仔细看，图像并没有好多少。</span>
+        <span class="line">表面上，数据似乎支持悲观者的判断。</span>
+        <span class="line">中美贸易占全球贸易的份额持续下滑，</span>
+        <span class="line">至2025年前三季度，已降至全球贸易总量的约2%。</span>
+        <span class="line">跨境投资的规模更小。</span>
+        <span class="line">两国关系的紧张程度，也已达到数十年来的最高点。</span>
+      </div>
+
+      <div class="image-single">
+        <figure><img src="assets/images/surveillance.jpg" alt="监控与信息安全"></figure>
+      </div>
+
+      <div class="figure-row">
+        <div class="figure-card">
+          <div class="figure-number">约2%</div>
+          <div class="figure-label">至2025年前三季度，中美贸易占全球贸易总量的比例。</div>
+          <div class="figure-source">用于呈现原脚本中的核心数据点。</div>
+        </div>
+        <div class="figure-card">
+          <div class="figure-number">数十年</div>
+          <div class="figure-label">两国关系的紧张程度，已达到数十年来的高点。</div>
+          <div class="figure-source">用于突出“体系压力”的长期背景。</div>
         </div>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">即使我们尝试建立新的平台，也必须面对一些重要的质疑。</span>
-        <span class="line">Any honest proposal must face hard questions.</span>
+        <span class="line">细看，情况没有好多少。</span>
+        <span class="line">一项2025年的研究发现，双边贸易的下降，并不能真正反映两国经济联系的全貌。</span>
+        <span class="line">很多商品如今通过墨西哥、越南、韩国等第三国中转。</span>
       </div>
 
-      <div class="accent-block">
-        <span class="line line-zh">我们是不是高估了企业在国家竞争中的作用？在历史上，经济上的相互依存，真的能防止冲突吗？还是有时候也会失败？</span>
-        <span class="line" style="margin-top: 1rem;">Have we overestimated business influence in state competition? In history, has economic interdependence truly prevented conflict — or has it sometimes failed?</span>
+      <div class="note-card">
+        <span class="line">换句话说，两国都在努力减少直接依赖——</span>
+        <span class="line">而且在很大程度上，它们成功了。</span>
       </div>
 
-      <div class="data-row">
-        <div class="data-card">
-          <div class="data-number">82<span>%</span></div>
-          <div class="data-label">U.S. companies in China remained profitable in 2024</div>
-          <div class="data-source">USCBC 2025 Survey</div>
+      <div class="quote"><div class="quote-text">脱钩没有消失。它只是被掩盖了。</div></div>
+
+      <div class="stanza">
+        <span class="line">那么，企业是怎么看的？</span>
+        <span class="line">根据美中贸易全国委员会2025年的调查，82%的美国企业在2024年仍然盈利。</span>
+        <span class="line">但对未来持乐观态度的企业只有不到一半</span>
+      </div>
+
+      <div class="figure-row">
+        <div class="figure-card">
+          <div class="figure-number">82%</div>
+          <div class="figure-label">美国企业在2024年仍然盈利。</div>
+          <div class="figure-source">美中贸易全国委员会2025年调查。</div>
         </div>
-        <div class="data-card">
-          <div class="data-number">&lt;50<span>%</span></div>
-          <div class="data-label">expect optimism about their future in China</div>
-          <div class="data-source">USCBC 2025 Survey</div>
+        <div class="figure-card">
+          <div class="figure-number">不到一半</div>
+          <div class="figure-label">对未来持乐观态度的企业比例。</div>
+          <div class="figure-source">美中贸易全国委员会2025年调查。</div>
         </div>
       </div>
 
-      <div class="pull-quote">
-        <span class="pull-quote-zh" style="font-size: 1.2rem;">利润还在。信心已经动摇。</span>
-        <span class="pull-quote-en" style="margin-top: 0.5rem;">Profits remain. Confidence has faltered.</span>
-        <span class="pull-quote-en" style="font-style: normal; margin-top: 1rem; color: var(--ink-light);">And confidence, historically, predicts the future before profits do.</span>
+      <div class="quote"><div class="quote-text">利润还在。信心已经动摇。</div></div>
+
+      <div class="stanza">
+        <span class="line">而信心，往往比利润更早反映未来。</span>
+      </div>
+
+      <div class="question-card">
+        <span class="line">在中国的背景下，这些问题可能更加复杂。</span>
+        <span class="line">企业到底有多大的独立性？</span>
+        <span class="line">它们有多少空间可以与外国企业进行开放的交流？</span>
+        <span class="line">参与这样的对话，会不会反而带来政治风险？</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">细看，情况没有好多少。一项2025年的研究发现，双边贸易的下降，并不能真正反映两国经济联系的全貌。</span>
-        <span class="line" style="margin-top: 1rem;">A 2025 study found that declining bilateral trade does not capture the full picture:</span>
-        <br>
-        <span class="line line-indent line-zh">很多商品如今通过墨西哥、越南、韩国等第三国中转。</span>
-        <span class="line line-indent">Much trade now routes through Mexico, Vietnam, South Korea, and other intermediaries.</span>
+        <span class="line">也有一些关键问题。</span>
+        <span class="line">在某些行业中，政治逻辑是不是已经超过了经济逻辑？</span>
+        <span class="line">如果企业已经在自己调整策略，那它们还需要一个共同的平台吗？</span>
+      </div>
+
+      <div class="lead-card">
+        <span class="line">而在科技领域——半导体、人工智能、先进制造——</span>
+        <span class="line">脱钩已经在发生，而且很可能无法逆转。</span>
+        <span class="line">这是因为两国政府都把技术能力和国家安全联系在了一起。</span>
+        <span class="line">在这些领域，竞争确实更接近零和。</span>
+      </div>
+
+      <div class="question-card">
+        <span class="line">对于企业来说，问题更加现实。</span>
+        <span class="line">参与这个平台，能带来什么实际价值？</span>
+        <span class="line">会不会带来名誉或政治风险？</span>
+        <span class="line">在最坏的情况下，这些关系真的会改变企业的决策吗？</span>
       </div>
 
       <div class="stanza">
-        <span class="line" style="font-style: italic; color: var(--gold);">换句话说，两国都在努力减少直接依赖——而且在很大程度上，它们成功了。</span>
-        <span class="line" style="margin-top: 1rem;">In other words: <span class="emphasis-text">both nations are reducing direct dependence — and they are largely succeeding.</span></span>
-      </div>
-
-      <div class="pull-quote">
-        <span class="pull-quote-zh" style="font-size: 1.4rem;">脱钩没有消失。它只是被掩盖了。</span>
-        <span class="pull-quote-en">Decoupling has not disappeared. It has only been obscured.</span>
-      </div>
-
-      <div class="visual-separator">
-        <span>·</span>
-      </div>
-
-      <div class="stanza">
-        <span class="line line-zh">在科技领域——半导体、人工智能、先进制造——脱钩已经在发生，而且很可能无法逆转。</span>
-        <span class="line">In technology — semiconductors, AI, advanced manufacturing — decoupling is already underway, likely irreversible.</span>
-        <br>
-        <span class="line line-zh">这是因为两国政府都把技术能力和国家安全联系在了一起。</span>
-        <span class="line line-indent">Both governments now link technological capability directly to national security.</span>
-      </div>
-
-      <div class="stanza">
-        <span class="line line-zh" style="font-weight: 400; margin-top: 2rem;">在这些领域，竞争确实更接近零和。</span>
-        <span class="line">In these sectors, competition truly approaches zero-sum.</span>
-      </div>
-
-      <div class="accent-block">
-        <span class="line line-zh">对于企业来说，问题更加现实。参与这个平台，能带来什么实际价值？会不会带来名誉或政治风险？</span>
-        <span class="line" style="margin-top: 1rem;">For businesses, the questions are more practical: What concrete value would participation bring? Could it create reputational or political risk?</span>
-      </div>
-
-      <div class="stanza" style="margin-top: 2rem;">
-        <span class="line line-zh">这些都不是理论问题。而是真实存在的限制。</span>
-        <span class="line" style="font-weight: 400;">These are not theoretical problems. They are real constraints.</span>
+        <span class="line">这些都不是理论问题。</span>
+        <span class="line">而是真实存在的限制。</span>
+        <span class="line">任何有效的方案，都必须认真面对这些问题。</span>
       </div>
     </section>
 
-    <!-- SECTION 5: PROPOSAL -->
     <section class="section" id="proposal">
       <div class="section-header">
-        <span class="section-num">五</span>
-        <div>
-          <span class="section-title-zh">提案</span>
-          <span class="section-title-en">The Proposal</span>
-        </div>
+        <span class="section-num">第五部分</span>
+        <h2 class="section-title">提案</h2>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">如果政府有其限制，市场本身也不够，那么，我们缺少的是什么？</span>
-        <span class="line">If governments have their limits, and markets alone are insufficient — what is missing?</span>
+        <span class="line">如果政府有其限制，</span>
+        <span class="line">市场本身也不够，</span>
+        <span class="line">那么，我们缺少的是什么？</span>
       </div>
 
-      <div class="accent-block">
-        <span class="line line-zh" style="font-weight: 400;">如果商界可以在稳定中美关系中发挥更大的作用，会怎么样？不是取代政府。而是作为一种补充。</span>
-        <span class="line" style="margin-top: 1rem;">What if business could play a larger role in stabilizing the relationship — not replacing government, but complementing it?</span>
+      <div class="quote"><div class="quote-text">如果商界可以在稳定中美关系中发挥更大的作用，会怎么样？</div></div>
+
+      <div class="stanza">
+        <span class="line">不是取代政府。</span>
+        <span class="line">而是作为一种补充。</span>
       </div>
 
-      <div class="visual-separator">
-        <span>·</span>
+      <div class="lead-card">
+        <span class="line">我们的想法是：</span>
+        <span class="line">建立一个面向企业、投资者和学术机构的对话平台。</span>
+        <span class="line">重点不是意识形态，</span>
+        <span class="line">而是实际的合作与协调。</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh" style="font-weight: 400;">我们的想法是：建立一个面向企业、投资者和学术机构的对话平台。</span>
-        <span class="line">Our proposal: a dialogue platform for businesses, investors, and academic institutions.</span>
-        <br>
-        <span class="line line-zh">重点不是意识形态，而是实际的合作与协调。</span>
-        <span class="line">Not ideological. Focused on practical cooperation and coordination.</span>
+        <span class="line">这个平台有四个目标。</span>
       </div>
 
-      <div class="pull-quote">
-        <span class="pull-quote-zh" style="font-size: 1.1rem;">这个平台有四个目标。</span>
-        <span class="pull-quote-en">Four Core Objectives</span>
-      </div>
-
-      <div class="goals-grid">
+      <div class="goal-grid">
         <div class="goal-card">
           <div class="goal-number">一</div>
-          <div class="goal-title">Find Common Ground</div>
-          <div class="goal-body">Identify areas still open to collaboration — green energy, medical technology, supply chain resilience — while clearly marking "red lines" so companies can assess risk accurately.</div>
+          <div class="goal-title">找到仍然可以合作的领域</div>
+          <div class="goal-body">比如绿色能源、医疗技术和供应链韧性。同时，也要明确哪些领域是“红线”，让企业可以更清楚地判断风险。</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">二</div>
-          <div class="goal-title">Bridge Information Gaps</div>
-          <div class="goal-body">Help businesses understand each other's institutions, policies, and commercial cultures. Many cross-border failures stem not from malice but from <span class="emphasis-text">misunderstanding</span>.</div>
+          <div class="goal-title">帮助企业更好地理解彼此</div>
+          <div class="goal-body">帮助企业更好地理解彼此的制度、政策和商业文化。很多跨国合作的问题，不是因为恶意，而是因为误解。</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">三</div>
-          <div class="goal-title">Transform Public Narratives</div>
-          <div class="goal-body">Through short video and storytelling, show the realities of enterprises in both nations. Reduce stereotypes. Build more complete, nuanced understanding on both sides.</div>
+          <div class="goal-title">通过媒体改变公众的看法</div>
+          <div class="goal-body">通过短视频和故事，展示中美企业的相同点和不同点。减少刻板印象，建立更全面的理解。</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">四</div>
-          <div class="goal-title">Build Lasting Dialogue</div>
-          <div class="goal-body">Not a one-time conference, but an ongoing process of exchange — so relationships can form gradually and trust can develop over time.</div>
-        </div>
-      </div>
-
-      <div class="stanza" style="margin-top: 2.5rem;">
-        <span class="line line-zh" style="font-weight: 400;">在实践中，可以分阶段进行。</span>
-        <span class="line">In practice, this unfolds in phases:</span>
-      </div>
-
-      <div class="phase-list">
-        <div class="phase-item">
-          <div class="phase-title">Phase 1 — Short-Form Media</div>
-          <div class="phase-body">Videos introducing real business situations from both sides. Accessible, human, concrete — showing actual challenges and opportunities.</div>
-        </div>
-        <div class="phase-item">
-          <div class="phase-title">Phase 2 — Small-Group Dialogue</div>
-          <div class="phase-body">Intimate conversations among entrepreneurs, investors, and researchers from both nations. Deep exchange over large-scale events.</div>
-        </div>
-        <div class="phase-item">
-          <div class="phase-title">Phase 3 — Working Groups</div>
-          <div class="phase-body">Sector-specific teams addressing concrete challenges: regulatory interpretation, contract norms, labor practices, supply chain coordination.</div>
-        </div>
-        <div class="phase-item">
-          <div class="phase-title">Phase 4 — Academic Partnership</div>
-          <div class="phase-body">Collaboration with universities for systematic research, grounding dialogue in evidence and creating long-term institutional memory.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- SECTION 6: REALITY CHECK -->
-    <section class="section" id="reality">
-      <div class="section-header">
-        <span class="section-num">六</span>
-        <div>
-          <span class="section-title-zh">现实考量</span>
-          <span class="section-title-en">Reality Check</span>
+          <div class="goal-title">建立长期的对话机制</div>
+          <div class="goal-body">不是一次性的会议，而是持续的交流过程。让关系慢慢建立，让信任逐渐发展。</div>
         </div>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">当然，这种方法也有很多局限。</span>
-        <span class="line">Of course, this approach has real limitations. We do not minimize them.</span>
+        <span class="line">减少这种信息差，可以帮助企业做出更好的决策。</span>
       </div>
 
-      <ul class="limitation-list">
-        <li><span class="line-zh">中美之间的战略竞争不会消失。政府政策，比如出口管制或投资限制，可能会影响合作。</span> Strategic competition between the nations will not disappear. Government policy — export controls, investment restrictions — may constrain collaboration regardless of intentions.</li>
-        <li><span class="line-zh">媒体环境和公众看法，也可能继续加深不信任。</span> The media environment and public opinion on both sides may continue deepening mistrust.</li>
-        <li><span class="line-zh">企业本身也可能不愿意参与。如果没有明确的好处，这种参与可能被认为没有必要，甚至有风险。</span> Businesses themselves may be reluctant to participate. Without clear benefits, participation might seem unnecessary — or even risky.</li>
-        <li><span class="line-zh">在中国的背景下，这些问题可能更加复杂。企业到底有多大的独立性？它们有多少空间可以与外国企业进行开放的交流？</span> In China's context, questions are more complex. How much independence do enterprises have? What space exists for open dialogue with foreign counterparts?</li>
-        <li><span class="line-zh">在某些行业中，政治逻辑是不是已经超过了经济逻辑？</span> In certain sectors, has political logic already superseded economic logic?</li>
-        <li><span class="line-zh">类似的对话平台已经存在。这个提案并不能取代它们。也不一定能从根本上改变整个国际环境。</span> Similar platforms already exist. This proposal does not replace them, and likely cannot fundamentally transform the international environment.</li>
-      </ul>
-
-      <div class="visual-separator">
-        <span>·</span>
+      <div class="image-pair">
+        <figure><img src="assets/images/handshake-flag.jpg" alt="外交与对话"></figure>
+        <figure><img src="assets/images/trade-balance.png" alt="经济与平衡"></figure>
       </div>
 
-      <div class="stanza" style="margin-top: 2.5rem;">
-        <span class="line line-zh" style="font-style: italic;">但也许，这并不是最重要的。</span>
-        <span class="line" style="font-style: italic; color: var(--accent);">But perhaps that is not the most important question.</span>
-      </div>
-
-      <div class="accent-block">
-        <span class="line line-zh">一个稳定、可信的平台的缺失本身，就是一个值得解决的问题。</span>
-        <span class="line" style="margin-top: 1rem;">The absence of a stable, trusted platform is itself a problem worthy of solving.</span>
-        <br>
-        <span class="line line-zh" style="margin-top: 1rem;">即使是不完美的对话，也比没有对话好。</span>
-        <span class="line">Even imperfect dialogue is better than its absence.</span>
+      <div class="flow">
+        <div class="flow-title">实践路径</div>
+        <div class="flow-track">
+          <div class="flow-step">先通过短视频介绍真实的商业情况。</div>
+          <div class="flow-step">然后举办小规模的对话，让企业家、投资者和学者深入交流。</div>
+          <div class="flow-step">接着建立工作小组，讨论具体问题。</div>
+          <div class="flow-step">最后，通过与大学合作，进行更系统的研究。</div>
+        </div>
       </div>
     </section>
 
-  </div>
+    <section class="section" id="reality">
+      <div class="section-header">
+        <span class="section-num">第六部分</span>
+        <h2 class="section-title">现实考量</h2>
+      </div>
 
-  <!-- SECTION 7: RESOLUTION -->
-  <section class="section" id="closing">
-    <div class="section-header">
-      <span class="section-num">七</span>
-      <div>
-        <span class="section-title-zh">结尾</span>
-        <span class="section-title-en">Resolution</span>
+      <div class="stanza">
+        <span class="line">当然，这种方法也有很多局限。</span>
+      </div>
+
+      <div class="question-card">
+        <span class="line">中美之间的战略竞争不会消失。</span>
+        <span class="line">政府政策，比如出口管制或投资限制，可能会影响合作。</span>
+        <span class="line">媒体环境和公众看法，也可能继续加深不信任。</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">企业本身也可能不愿意参与。</span>
+        <span class="line">如果没有明确的好处，这种参与可能被认为没有必要，甚至有风险。</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">同时，我们也要承认：</span>
+        <span class="line">类似的对话平台已经存在。</span>
+        <span class="line">商业论坛、学术交流、行业合作，一直都在进行。</span>
+      </div>
+
+      <div class="note-card">
+        <span class="line">这个提案并不能取代它们。</span>
+        <span class="line">也不一定能从根本上改变整个国际环境。</span>
+      </div>
+
+      <div class="quote"><div class="quote-text">但也许，这并不是最重要的。</div></div>
+    </section>
+
+    <section class="section" id="ending">
+      <div class="section-header">
+        <span class="section-num">第七部分</span>
+        <h2 class="section-title">结尾</h2>
+      </div>
+
+      <div class="image-pair">
+        <figure><img src="assets/images/containers-collide.jpg" alt="贸易与往来"></figure>
+        <figure><img src="assets/images/panda-cartoon.jpg" alt="关系与理解"></figure>
+      </div>
+
+      <div class="stanza">
+        <span class="line">问题不在于中美会不会竞争。</span>
+        <span class="line">它们一定会竞争。</span>
+      </div>
+
+      <div class="quote"><div class="quote-text">真正的问题是：竞争是不是一定会变成冲突？</div></div>
+
+      <div class="stanza">
+        <span class="line">还是说，我们可以通过新的对话方式，</span>
+        <span class="line">在竞争中寻找合作的空间？</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">如果两国真的在同一条船上，</span>
+        <span class="line">那么失败不会是各自的。</span>
+        <span class="line">而是共同的。</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line">真正的挑战，不只是竞争。</span>
+        <span class="line">而是学会在同一条船上，一起前进。</span>
+      </div>
+    </section>
+  </main>
+
+  <section class="about page">
+    <div class="about-header">
+      <h2 class="about-title">关于本项目</h2>
+      <p class="about-intro">本网站是哈佛大学中文课程 Chinese 130B《同舟共济：中美商业对话》项目的成果。该项目致力于探索在竞争背景下，中美两国工商界如何通过对话寻找合作的可能。</p>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-member">
+        <div class="member-photo">
+          <img src="assets/images/rhondel.jpg" alt="Team Member 1">
+        </div>
+        <div class="member-name-en">Rhondel Whyte</div>
+        <div class="member-name-zh">魏海涛</div>
+        <a href="https://linkedin.com/in/rhondelwhyte/" class="member-link" target="_blank">LinkedIn</a>
+      </div>
+
+      <div class="team-member">
+        <div class="member-photo">
+          <img src="assets/images/chris.jpg" alt="Team Member 2">
+        </div>
+        <div class="member-name-en">Chris Cooper</div>
+        <div class="member-name-zh">柯瑞和</div>
+        <a href="https://linkedin.com/in/chriscoop99" class="member-link" target="_blank">LinkedIn</a>
       </div>
     </div>
 
-    <div class="stanza">
-      <span class="line line-zh">问题不在于中美会不会竞争。它们一定会竞争。</span>
-      <span class="line">The question is not whether the U.S. and China will compete. They will.</span>
-    </div>
-
-    <div class="pull-quote">
-      <span class="pull-quote-zh" style="font-size: 1.3rem;">真正的问题是：竞争是不是一定会变成冲突？</span>
-      <span class="pull-quote-en" style="margin-top: 1rem;">The real question: Must competition become conflict?</span>
-      <span class="pull-quote-en" style="margin-top: 1rem; font-style: normal; color: var(--ink-mid);">Or can we, through new forms of dialogue, find space for cooperation within rivalry?</span>
-    </div>
-
-    <div class="stanza" style="margin-top: 2.5rem;">
-      <span class="line line-zh">如果两国真的在同一条船上，那么失败不会是各自的。而是共同的。</span>
-      <span class="line" style="font-style: italic;">If both nations truly share the same boat, then failure will not be theirs alone — it will be mutual.</span>
-    </div>
-
-    <div class="visual-separator">
-      <span>·</span>
-    </div>
-
-    <div class="stanza">
-      <span class="line line-zh" style="font-weight: 400; font-size: 1.1rem;">真正的挑战，不只是竞争。而是学会在同一条船上，一起前进。</span>
-      <span class="line" style="font-size: 1.1rem;">The true challenge is not competition itself — but learning to move forward together in the same boat.</span>
-    </div>
   </section>
 
-  <!-- FINAL CLOSING -->
-  <section class="closing section" style="border-top: 0.5px solid rgba(26,26,46,0.12);">
-    <div class="closing-zh">同舟共济</div>
-    <p class="closing-en">In the same boat, together.</p>
-    <p class="closing-final">
-      The pathway forward requires more than government diplomacy or market forces alone.<br><br>
-      It requires the voices, engagement, and creativity of business leaders, entrepreneurs, and thinkers from both nations —<br>
-      willing to build bridges where walls are rising,<br>
-      and to find common ground in a landscape of growing contention.<br><br>
-      <span style="font-family: 'Noto Serif SC', serif; font-weight: 300; letter-spacing: 0.1em; color: var(--gold);">这只是开始。这是一种可能。</span><br>
-      <span style="font-family: 'EB Garamond', serif; font-style: italic; color: var(--gold); letter-spacing: 0.08em;">This is only a beginning. This is a possibility.</span>
-    </p>
-  </section>
+  <script>
+    const sections = document.querySelectorAll('.section');
+    const progress = document.getElementById('progress');
+    const tensionMarker = document.getElementById('tensionMarker');
 
-</div>
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.12 });
 
-<script>
-  const sections = document.querySelectorAll('.section');
-  const progress = document.getElementById('progress');
-  const marker = document.getElementById('tension-marker');
+    sections.forEach((section) => observer.observe(section));
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.classList.add('visible');
+    document.querySelectorAll('.nav-links a').forEach((link) => {
+      link.addEventListener('click', (event) => {
+        event.preventDefault();
+        const target = document.querySelector(link.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
     });
-  }, { threshold: 0.12 });
 
-  sections.forEach(s => observer.observe(s));
+    window.addEventListener('scroll', () => {
+      const scrolled = window.scrollY;
+      const total = document.body.scrollHeight - window.innerHeight;
+      progress.style.width = Math.min(100, (scrolled / total) * 100) + '%';
 
-  // Smooth scroll for nav links
-  document.querySelectorAll('.nav-links a').forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const targetId = link.getAttribute('href');
-      const target = document.querySelector(targetId);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth' });
+      const strain = document.getElementById('strain');
+      if (strain && tensionMarker) {
+        const rect = strain.getBoundingClientRect();
+        const visible = 1 - (rect.top / (window.innerHeight * 0.85));
+        const position = 42 + visible * 30;
+        tensionMarker.style.left = Math.min(74, Math.max(42, position)) + '%';
       }
     });
-  });
 
-  // Animate data numbers on scroll
-  const animateNumbers = () => {
-    const dataNumbers = document.querySelectorAll('.data-number');
-    dataNumbers.forEach(num => {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(e => {
-          if (e.isIntersecting && !num.classList.contains('animated')) {
-            num.classList.add('animated-stat');
-            num.classList.add('animated');
-          }
-        });
-      }, { threshold: 0.5 });
-      observer.observe(num);
-    });
-  };
-  
-  animateNumbers();
+    // Animate cards and images on scroll
+    const animateElements = document.querySelectorAll('.lead-card, .note-card, .question-card, .quote, .image-pair, .image-single, .figure-row, .goal-grid');
+    const elementObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate');
+        }
+      });
+    }, { threshold: 0.1 });
 
-  window.addEventListener('scroll', () => {
-    const scrolled = window.scrollY;
-    const total = document.body.scrollHeight - window.innerHeight;
-    progress.style.width = Math.min(100, (scrolled / total) * 100) + '%';
-
-    const strainSection = document.getElementById('strain');
-    if (strainSection) {
-      const rect = strainSection.getBoundingClientRect();
-      const sectionTop = rect.top;
-      const sectionHeight = rect.height;
-      
-      if (sectionTop < window.innerHeight * 0.8 && sectionTop > -sectionHeight) {
-        // Smoothly move marker from 40% to 70% as you scroll through section
-        const progress = 1 - (sectionTop / (window.innerHeight * 0.8));
-        const position = 40 + (progress * 30);
-        marker.style.left = Math.min(70, Math.max(40, position)) + '%';
-      }
-    }
-  });
-</script>
+    animateElements.forEach((element) => elementObserver.observe(element));
+  </script>
+</body>
+</html>
