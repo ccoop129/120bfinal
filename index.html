@@ -533,6 +533,70 @@
     transition: width 0.1s linear;
   }
 
+  /* ENHANCED VISUALS */
+  .accent-block {
+    background: linear-gradient(135deg, rgba(184,134,11,0.08), rgba(74,111,165,0.06));
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 2rem 0;
+    border-left: 3px solid var(--gold);
+  }
+
+  .visual-separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 3rem 0;
+    opacity: 0.4;
+  }
+
+  .visual-separator::before,
+  .visual-separator::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+
+  .visual-separator span {
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+  }
+
+  .stat-highlight {
+    font-size: 2rem;
+    color: var(--gold);
+    font-weight: 300;
+    font-family: 'EB Garamond', serif;
+  }
+
+  .emphasis-text {
+    color: var(--accent);
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .highlight-zh {
+    background: linear-gradient(120deg, rgba(184,134,11,0.1), transparent);
+    padding: 0.1rem 0.3rem;
+  }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  @keyframes glow {
+    0%, 100% { text-shadow: 0 0 10px rgba(184,134,11,0.3); }
+    50% { text-shadow: 0 0 20px rgba(184,134,11,0.5); }
+  }
+
+  .animated-stat {
+    animation: slideIn 0.8s ease forwards;
+  }
+
   @media (max-width: 600px) {
     .data-row, .goals-grid { grid-template-columns: 1fr; }
     .nav-links { display: none; }
@@ -550,6 +614,7 @@
     <li><a href="#strain">压力</a></li>
     <li><a href="#test">质疑</a></li>
     <li><a href="#proposal">提案</a></li>
+    <li><a href="#reality">限制</a></li>
     <li><a href="#closing">结尾</a></li>
   </ul>
 </nav>
@@ -579,34 +644,48 @@
         </div>
       </div>
 
-      <div class="stanza">
-        <span class="line">History tells us: when a rising power meets an established one,</span>
-        <span class="line">the result is often conflict.</span>
+      <div class="accent-block">
+        <span class="line line-zh" style="font-size: 1.15rem; font-weight: 400;">历史告诉我们，当一个正在崛起的国家遇到一个已经强大的国家时，结果往往是冲突。</span>
+        <br>
+        <span class="line" style="margin-top: 1rem;">History tells us: when a rising power meets an established one, the result is often conflict.</span>
       </div>
 
       <div class="stanza">
+        <span class="line line-indent">古代的雅典和斯巴达。</span>
         <span class="line line-indent">Ancient Athens and Sparta.</span>
+        <br>
+        <span class="line line-indent">一个在上升，一个在防守。</span>
         <span class="line line-indent">One ascending. One defending.</span>
       </div>
 
+      <div class="visual-separator">
+        <span>·</span>
+      </div>
+
       <div class="stanza">
-        <span class="line">Today, many are asking — could the United States and China</span>
-        <span class="line">find themselves in a similar place?</span>
+        <span class="line line-zh">今天，很多人开始思考：美国和中国会不会进入类似的局面？</span>
+        <span class="line" style="margin-top: 0.8rem;">Today, many begin to ask: Could the United States and China enter a similar situation?</span>
       </div>
 
       <div class="pull-quote">
-        <span class="pull-quote-zh" style="font-size: 1.1rem; color: var(--ink-light);">Graham Allison calls this the</span>
-        <span class="pull-quote-zh">"Thucydides Trap"</span>
-        <span class="pull-quote-en">When a rising power challenges an established one, the structural tension can become catastrophic.</span>
+        <span class="pull-quote-zh">修昔底德陷阱</span>
+        <span class="pull-quote-en" style="display: block; margin-top: 0.5rem;">The Thucydides Trap</span>
+        <span class="pull-quote-en" style="font-style: normal; margin-top: 1rem; font-size: 0.95rem; color: var(--ink-mid); line-height: 1.7;">When a rising power challenges an established one, structural tensions can produce catastrophic conflict. Harvard economist Graham Allison coined this term after studying 16 cases of power transitions in history.</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-zh">历史让我们有理由担心。</span>
+        <span class="line line-zh" style="color: var(--accent);">历史让我们有理由担心。</span>
         <span class="line" style="font-style: italic; color: var(--ink-light);">History gives us reason for concern.</span>
       </div>
+
       <div class="stanza">
-        <span class="line line-zh">但是，历史并不一定决定未来。</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">But history does not have to determine the future.</span>
+        <span class="line line-zh" style="color: var(--gold); font-weight: 400;">但是，历史并不一定决定未来。</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light); font-weight: 400;">But history does not have to determine the future.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">中美关系的未来，还没有被写下。</span>
+        <span class="line">The future of U.S.–China relations has not yet been written.</span>
       </div>
     </section>
 
@@ -621,36 +700,51 @@
       </div>
 
       <div class="stanza">
+        <span class="line line-zh">今天，中美关系在很大程度上由竞争来定义。</span>
         <span class="line">Today, the U.S.–China relationship is largely defined by competition.</span>
-        <span class="line line-indent">Trade restrictions. Technology rivalry. Strategic mistrust.</span>
+        <br>
+        <span class="line line-indent line-zh">贸易保护。科技竞争。战略上的不信任。</span>
+        <span class="line line-indent">Trade protection. Technology competition. Strategic distrust.</span>
       </div>
 
       <div class="stanza">
-        <span class="line">And yet — beneath the surface — another reality persists.</span>
+        <span class="line line-zh">在两国社会中，越来越多的声音把对方看成一种威胁，而不仅仅是竞争对手。</span>
+        <span class="line">In both societies, more voices see the other not just as a rival, but as a threat.</span>
+        <br>
+        <span class="line line-zh">这种情况让不信任感不断加深。</span>
+        <span class="line">This deepens mistrust — not just between governments, but among ordinary people.</span>
+      </div>
+
+      <div class="visual-separator">
+        <span>·</span>
       </div>
 
       <div class="stanza">
-        <span class="line line-indent">Supply chains still cross both countries.</span>
-        <span class="line line-indent">Capital still flows between them.</span>
-        <span class="line line-indent">Innovation still depends on shared talent, knowledge, and infrastructure.</span>
+        <span class="line line-zh" style="font-style: italic; color: var(--accent);">但是，在表面之下，还有另一种现实。</span>
+        <span class="line" style="font-style: italic; color: var(--accent);">But beneath the surface — another reality persists.</span>
       </div>
 
-      <div class="ornament">· · ·</div>
+      <div class="accent-block">
+        <span class="line line-zh">虽然关系日益紧张，中美之间依然存在很深的联系。供应链仍然跨越两国。资金仍然在两国之间流动。创新的发展也依赖人才、知识和基础设施的共享。</span>
+        <span class="line" style="margin-top: 1rem;">Despite mounting tensions, deep connections remain between the two nations. Supply chains still cross borders. Capital still flows. Innovation still depends on shared talent, knowledge, and infrastructure.</span>
+      </div>
 
       <div class="pull-quote">
-        <span class="pull-quote-zh">你中有我，我中有你。</span>
+        <span class="pull-quote-zh" style="font-size: 1.4rem;">你中有我，我中有你。</span>
         <span class="pull-quote-en">You are in me, and I am in you.</span>
       </div>
 
-      <div class="pull-quote" style="margin-top: 1rem;">
-        <span class="pull-quote-zh">吴越同舟。</span>
+      <div class="pull-quote" style="margin-top: 1.5rem;">
+        <span class="pull-quote-zh" style="font-size: 1.4rem;">吴越同舟。</span>
         <span class="pull-quote-en">Two rivals, in the same boat.</span>
       </div>
 
       <div class="stanza" style="margin-top: 2.5rem;">
-        <span class="line">But if both countries are so deeply linked —</span>
-        <span class="line">why does it feel like they are drifting apart?</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">Is decoupling already happening?</span>
+        <span class="line line-zh">但如果真是这样，如果两国联系如此紧密，为什么我们却感觉它们在渐渐远离？</span>
+        <span class="line">But if both are so deeply linked — why does it feel like they are drifting apart?</span>
+        <br>
+        <span class="line line-zh" style="font-style: italic; color: var(--ink-light); margin-top: 1rem;">这种相互依存关系是不是正在减弱？"脱钩"是不是已经在发生？如果是这样，这意味着什么？</span>
+        <span class="line" style="font-style: italic; color: var(--ink-light);">Is interdependence weakening? Is decoupling already happening? And what does this mean?</span>
       </div>
     </section>
 
@@ -665,36 +759,60 @@
       </div>
 
       <div class="stanza">
-        <span class="line">Traditionally, we assume governments manage relations between nations.</span>
-        <span class="line">But governments are focused on security, strategy, political pressures.</span>
+        <span class="line line-zh">传统上，我们认为政府会处理国家之间的关系。</span>
+        <span class="line">Traditionally, we think governments manage relations between nations.</span>
+        <br>
+        <span class="line line-zh">但政府更多关注的是安全、战略和政治压力。</span>
+        <span class="line">But governments focus on security, strategy, and political pressure.</span>
       </div>
 
       <div class="stanza">
+        <span class="line line-zh">企业则不同。</span>
         <span class="line">Businesses are different.</span>
+        <br>
+        <span class="line line-indent line-zh">它们关注的是风险、机会，以及长期发展。</span>
         <span class="line line-indent">They think about risk, opportunity, and long-term growth.</span>
-        <span class="line line-indent">They still want to develop, collaborate, and innovate.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">而现在，这两个世界正在慢慢分离。</span>
+        <span class="line" style="font-style: italic; color: var(--accent);">And now, these two worlds are slowly separating.</span>
+      </div>
+
+      <div class="accent-block">
+        <span class="line" style="color: var(--ink-mid);">Scholars like Meg Rithmire point out that political tensions are changing how corporations operate globally. Businesses face:</span>
+        <br>
+        <span class="line line-indent" style="margin-top: 1rem;">• Growing uncertainty</span>
+        <span class="line line-indent">• More complex policy environments</span>
+        <span class="line line-indent">• Rising geopolitical risks</span>
+        <br>
+        <span class="line" style="margin-top: 1rem;">Yet companies still want to develop, collaborate, and innovate.</span>
       </div>
 
       <div class="tension-bar">
         <div class="tension-label">
-          <span>Interdependence</span>
-          <span>Geopolitical risk</span>
+          <span>Economic logic</span>
+          <span>Political pressure</span>
         </div>
         <div class="tension-track">
-          <div class="tension-marker" id="tension-marker" style="left: 30%;"></div>
+          <div class="tension-marker" id="tension-marker" style="left: 40%;"></div>
         </div>
-        <div class="tension-caption">Where businesses now operate — caught between economic logic and political pressure</div>
+        <div class="tension-caption">Where businesses now operate — caught between economic opportunity and government constraint</div>
       </div>
 
       <div class="stanza">
-        <span class="line">The problem: there is no stable, trusted platform</span>
-        <span class="line">where businesses, investors, and researchers from both sides</span>
-        <span class="line">can openly discuss these tensions.</span>
+        <span class="line line-zh" style="font-weight: 400;">问题在于：目前没有一个稳定、可信的平台，让不同国家的企业、投资者和研究者可以公开交流这些问题。</span>
+        <span class="line" style="margin-top: 1rem;">The problem: no stable, trusted platform exists where businesses, investors, and researchers can openly discuss these tensions.</span>
       </div>
 
-      <div class="stanza">
+      <div class="pull-quote">
+        <span class="pull-quote-zh">没有一个共同的空间，让大家可以更好地理解风险、机会和彼此的期待。</span>
+        <span class="pull-quote-en">No shared space to understand risk, opportunity, and mutual expectations.</span>
+      </div>
+
+      <div class="stanza" style="margin-top: 2.5rem;">
         <span class="line line-zh">我们原本依赖的体系，正在承受越来越大的压力。</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">The systems we once relied on are under growing strain.</span>
+        <span class="line">The systems we once relied on are under growing strain.</span>
       </div>
     </section>
 
@@ -709,46 +827,77 @@
       </div>
 
       <div class="stanza">
+        <span class="line line-zh">即使我们尝试建立新的平台，也必须面对一些重要的质疑。</span>
         <span class="line">Any honest proposal must face hard questions.</span>
+      </div>
+
+      <div class="accent-block">
+        <span class="line line-zh">我们是不是高估了企业在国家竞争中的作用？在历史上，经济上的相互依存，真的能防止冲突吗？还是有时候也会失败？</span>
+        <span class="line" style="margin-top: 1rem;">Have we overestimated business influence in state competition? In history, has economic interdependence truly prevented conflict — or has it sometimes failed?</span>
       </div>
 
       <div class="data-row">
         <div class="data-card">
           <div class="data-number">82<span>%</span></div>
-          <div class="data-label">of U.S. companies operating in China were still profitable in 2024.</div>
-          <div class="data-source">USCBC Survey, 2025</div>
+          <div class="data-label">U.S. companies in China remained profitable in 2024</div>
+          <div class="data-source">USCBC 2025 Survey</div>
         </div>
         <div class="data-card">
           <div class="data-number">&lt;50<span>%</span></div>
-          <div class="data-label">remained optimistic about the future of their business in China.</div>
-          <div class="data-source">USCBC Survey, 2025</div>
+          <div class="data-label">expect optimism about their future in China</div>
+          <div class="data-source">USCBC 2025 Survey</div>
         </div>
       </div>
 
+      <div class="pull-quote">
+        <span class="pull-quote-zh" style="font-size: 1.2rem;">利润还在。信心已经动摇。</span>
+        <span class="pull-quote-en" style="margin-top: 0.5rem;">Profits remain. Confidence has faltered.</span>
+        <span class="pull-quote-en" style="font-style: normal; margin-top: 1rem; color: var(--ink-light);">And confidence, historically, predicts the future before profits do.</span>
+      </div>
+
       <div class="stanza">
-        <span class="line" style="font-style: italic; color: var(--gold);">Profits remain. Confidence has faltered.</span>
-        <span class="line" style="color: var(--ink-light);">And confidence tends to predict the future before profits do.</span>
+        <span class="line line-zh">细看，情况没有好多少。一项2025年的研究发现，双边贸易的下降，并不能真正反映两国经济联系的全貌。</span>
+        <span class="line" style="margin-top: 1rem;">A 2025 study found that declining bilateral trade does not capture the full picture:</span>
+        <br>
+        <span class="line line-indent line-zh">很多商品如今通过墨西哥、越南、韩国等第三国中转。</span>
+        <span class="line line-indent">Much trade now routes through Mexico, Vietnam, South Korea, and other intermediaries.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line" style="font-style: italic; color: var(--gold);">换句话说，两国都在努力减少直接依赖——而且在很大程度上，它们成功了。</span>
+        <span class="line" style="margin-top: 1rem;">In other words: <span class="emphasis-text">both nations are reducing direct dependence — and they are largely succeeding.</span></span>
+      </div>
+
+      <div class="pull-quote">
+        <span class="pull-quote-zh" style="font-size: 1.4rem;">脱钩没有消失。它只是被掩盖了。</span>
+        <span class="pull-quote-en">Decoupling has not disappeared. It has only been obscured.</span>
+      </div>
+
+      <div class="visual-separator">
+        <span>·</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh">在科技领域——半导体、人工智能、先进制造——脱钩已经在发生，而且很可能无法逆转。</span>
+        <span class="line">In technology — semiconductors, AI, advanced manufacturing — decoupling is already underway, likely irreversible.</span>
+        <br>
+        <span class="line line-zh">这是因为两国政府都把技术能力和国家安全联系在了一起。</span>
+        <span class="line line-indent">Both governments now link technological capability directly to national security.</span>
+      </div>
+
+      <div class="stanza">
+        <span class="line line-zh" style="font-weight: 400; margin-top: 2rem;">在这些领域，竞争确实更接近零和。</span>
+        <span class="line">In these sectors, competition truly approaches zero-sum.</span>
+      </div>
+
+      <div class="accent-block">
+        <span class="line line-zh">对于企业来说，问题更加现实。参与这个平台，能带来什么实际价值？会不会带来名誉或政治风险？</span>
+        <span class="line" style="margin-top: 1rem;">For businesses, the questions are more practical: What concrete value would participation bring? Could it create reputational or political risk?</span>
       </div>
 
       <div class="stanza" style="margin-top: 2rem;">
-        <span class="line">A 2025 study found that declining bilateral trade figures</span>
-        <span class="line">may not capture the full picture — much trade now routes through</span>
-        <span class="line line-indent">Mexico, Vietnam, South Korea, and other third countries.</span>
-      </div>
-
-      <div class="stanza">
-        <span class="line" style="font-style: italic;">Decoupling has not disappeared. It has only been obscured.</span>
-      </div>
-
-      <div class="stanza" style="margin-top: 2rem;">
-        <span class="line">In technology — chips, AI, advanced manufacturing —</span>
-        <span class="line">decoupling is already underway, and likely irreversible.</span>
-        <span class="line line-indent">Here, competition is closer to zero-sum.</span>
-      </div>
-
-      <div class="stanza">
         <span class="line line-zh">这些都不是理论问题。而是真实存在的限制。</span>
-        <span class="line" style="font-style: italic; color: var(--ink-light);">These are not theoretical problems. They are real constraints.</span>
+        <span class="line" style="font-weight: 400;">These are not theoretical problems. They are real constraints.</span>
       </div>
     </section>
 
@@ -763,56 +912,76 @@
       </div>
 
       <div class="stanza">
-        <span class="line">If governments have their limits,</span>
-        <span class="line">and markets alone are not enough —</span>
-        <span class="line" style="font-style: italic;">what is missing?</span>
+        <span class="line line-zh">如果政府有其限制，市场本身也不够，那么，我们缺少的是什么？</span>
+        <span class="line">If governments have their limits, and markets alone are insufficient — what is missing?</span>
+      </div>
+
+      <div class="accent-block">
+        <span class="line line-zh" style="font-weight: 400;">如果商界可以在稳定中美关系中发挥更大的作用，会怎么样？不是取代政府。而是作为一种补充。</span>
+        <span class="line" style="margin-top: 1rem;">What if business could play a larger role in stabilizing the relationship — not replacing government, but complementing it?</span>
+      </div>
+
+      <div class="visual-separator">
+        <span>·</span>
       </div>
 
       <div class="stanza">
-        <span class="line">We propose a dialogue platform for businesses, investors, and academic institutions.</span>
+        <span class="line line-zh" style="font-weight: 400;">我们的想法是：建立一个面向企业、投资者和学术机构的对话平台。</span>
+        <span class="line">Our proposal: a dialogue platform for businesses, investors, and academic institutions.</span>
+        <br>
+        <span class="line line-zh">重点不是意识形态，而是实际的合作与协调。</span>
         <span class="line">Not ideological. Focused on practical cooperation and coordination.</span>
-        <span class="line">Not to replace government. To complement it.</span>
+      </div>
+
+      <div class="pull-quote">
+        <span class="pull-quote-zh" style="font-size: 1.1rem;">这个平台有四个目标。</span>
+        <span class="pull-quote-en">Four Core Objectives</span>
       </div>
 
       <div class="goals-grid">
         <div class="goal-card">
           <div class="goal-number">一</div>
-          <div class="goal-title">Find common ground</div>
-          <div class="goal-body">Identify areas still open to collaboration — green energy, medical technology, supply chain stability — while clarifying red lines so companies can assess risk clearly.</div>
+          <div class="goal-title">Find Common Ground</div>
+          <div class="goal-body">Identify areas still open to collaboration — green energy, medical technology, supply chain resilience — while clearly marking "red lines" so companies can assess risk accurately.</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">二</div>
-          <div class="goal-title">Bridge the information gap</div>
-          <div class="goal-body">Help businesses understand each other's institutions, policies, and commercial cultures. Many cross-border failures stem not from malice but from misunderstanding.</div>
+          <div class="goal-title">Bridge Information Gaps</div>
+          <div class="goal-body">Help businesses understand each other's institutions, policies, and commercial cultures. Many cross-border failures stem not from malice but from <span class="emphasis-text">misunderstanding</span>.</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">三</div>
-          <div class="goal-title">Shift public narratives</div>
-          <div class="goal-body">Through short video and storytelling, show the similarities and differences between U.S. and Chinese enterprises. Reduce stereotypes. Build more complete understanding.</div>
+          <div class="goal-title">Transform Public Narratives</div>
+          <div class="goal-body">Through short video and storytelling, show the realities of enterprises in both nations. Reduce stereotypes. Build more complete, nuanced understanding on both sides.</div>
         </div>
         <div class="goal-card">
           <div class="goal-number">四</div>
-          <div class="goal-title">Build lasting dialogue</div>
-          <div class="goal-body">Not a one-time conference, but a sustained process of exchange — so that relationships can form slowly, and trust can develop over time.</div>
+          <div class="goal-title">Build Lasting Dialogue</div>
+          <div class="goal-body">Not a one-time conference, but an ongoing process of exchange — so relationships can form gradually and trust can develop over time.</div>
         </div>
+      </div>
+
+      <div class="stanza" style="margin-top: 2.5rem;">
+        <span class="line line-zh" style="font-weight: 400;">在实践中，可以分阶段进行。</span>
+        <span class="line">In practice, this unfolds in phases:</span>
       </div>
 
       <div class="phase-list">
         <div class="phase-item">
-          <div class="phase-title">Phase 1 — Short-form media</div>
-          <div class="phase-body">Short videos introducing real business situations from both sides. Accessible, human, concrete.</div>
+          <div class="phase-title">Phase 1 — Short-Form Media</div>
+          <div class="phase-body">Videos introducing real business situations from both sides. Accessible, human, concrete — showing actual challenges and opportunities.</div>
         </div>
         <div class="phase-item">
-          <div class="phase-title">Phase 2 — Small-group dialogue</div>
-          <div class="phase-body">Intimate conversations among entrepreneurs, investors, and researchers. Depth over scale.</div>
+          <div class="phase-title">Phase 2 — Small-Group Dialogue</div>
+          <div class="phase-body">Intimate conversations among entrepreneurs, investors, and researchers from both nations. Deep exchange over large-scale events.</div>
         </div>
         <div class="phase-item">
-          <div class="phase-title">Phase 3 — Working groups</div>
-          <div class="phase-body">Sector-specific groups to address concrete challenges: regulatory interpretation, contract norms, labor practices.</div>
+          <div class="phase-title">Phase 3 — Working Groups</div>
+          <div class="phase-body">Sector-specific teams addressing concrete challenges: regulatory interpretation, contract norms, labor practices, supply chain coordination.</div>
         </div>
         <div class="phase-item">
-          <div class="phase-title">Phase 4 — Academic partnership</div>
-          <div class="phase-body">Collaboration with universities for more systematic research, grounding the dialogue in evidence.</div>
+          <div class="phase-title">Phase 4 — Academic Partnership</div>
+          <div class="phase-body">Collaboration with universities for systematic research, grounding dialogue in evidence and creating long-term institutional memory.</div>
         </div>
       </div>
     </section>
@@ -822,41 +991,92 @@
       <div class="section-header">
         <span class="section-num">六</span>
         <div>
-          <span class="section-title-zh">现实限制</span>
+          <span class="section-title-zh">现实考量</span>
           <span class="section-title-en">Reality Check</span>
         </div>
       </div>
 
       <div class="stanza">
-        <span class="line">This approach has real limitations. We do not minimize them.</span>
+        <span class="line line-zh">当然，这种方法也有很多局限。</span>
+        <span class="line">Of course, this approach has real limitations. We do not minimize them.</span>
       </div>
 
       <ul class="limitation-list">
-        <li>Strategic competition between the U.S. and China will not disappear. Government policies — export controls, investment restrictions — may constrain collaboration regardless of good intentions.</li>
-        <li>The media environment on both sides may continue to deepen mistrust, regardless of what any platform does.</li>
-        <li>Businesses may be reluctant to participate if benefits are unclear — or if participation carries reputational or political risk.</li>
-        <li>Similar dialogue platforms already exist. This proposal does not replace them, and cannot by itself change the international environment.</li>
-        <li>In China specifically, the space available for companies to engage openly with foreign counterparts may be constrained in ways that are difficult to anticipate.</li>
+        <li><span class="line-zh">中美之间的战略竞争不会消失。政府政策，比如出口管制或投资限制，可能会影响合作。</span> Strategic competition between the nations will not disappear. Government policy — export controls, investment restrictions — may constrain collaboration regardless of intentions.</li>
+        <li><span class="line-zh">媒体环境和公众看法，也可能继续加深不信任。</span> The media environment and public opinion on both sides may continue deepening mistrust.</li>
+        <li><span class="line-zh">企业本身也可能不愿意参与。如果没有明确的好处，这种参与可能被认为没有必要，甚至有风险。</span> Businesses themselves may be reluctant to participate. Without clear benefits, participation might seem unnecessary — or even risky.</li>
+        <li><span class="line-zh">在中国的背景下，这些问题可能更加复杂。企业到底有多大的独立性？它们有多少空间可以与外国企业进行开放的交流？</span> In China's context, questions are more complex. How much independence do enterprises have? What space exists for open dialogue with foreign counterparts?</li>
+        <li><span class="line-zh">在某些行业中，政治逻辑是不是已经超过了经济逻辑？</span> In certain sectors, has political logic already superseded economic logic?</li>
+        <li><span class="line-zh">类似的对话平台已经存在。这个提案并不能取代它们。也不一定能从根本上改变整个国际环境。</span> Similar platforms already exist. This proposal does not replace them, and likely cannot fundamentally transform the international environment.</li>
       </ul>
 
-      <div class="stanza" style="margin-top: 2rem;">
-        <span class="line" style="font-style: italic;">But perhaps that is not the most important question.</span>
-        <span class="line">The absence of a stable platform is itself a problem worth addressing.</span>
-        <span class="line">Even partial, imperfect dialogue is better than its absence.</span>
+      <div class="visual-separator">
+        <span>·</span>
+      </div>
+
+      <div class="stanza" style="margin-top: 2.5rem;">
+        <span class="line line-zh" style="font-style: italic;">但也许，这并不是最重要的。</span>
+        <span class="line" style="font-style: italic; color: var(--accent);">But perhaps that is not the most important question.</span>
+      </div>
+
+      <div class="accent-block">
+        <span class="line line-zh">一个稳定、可信的平台的缺失本身，就是一个值得解决的问题。</span>
+        <span class="line" style="margin-top: 1rem;">The absence of a stable, trusted platform is itself a problem worthy of solving.</span>
+        <br>
+        <span class="line line-zh" style="margin-top: 1rem;">即使是不完美的对话，也比没有对话好。</span>
+        <span class="line">Even imperfect dialogue is better than its absence.</span>
       </div>
     </section>
 
   </div>
 
-  <!-- CLOSING -->
-  <section class="closing section" id="closing">
+  <!-- SECTION 7: RESOLUTION -->
+  <section class="section" id="closing">
+    <div class="section-header">
+      <span class="section-num">七</span>
+      <div>
+        <span class="section-title-zh">结尾</span>
+        <span class="section-title-en">Resolution</span>
+      </div>
+    </div>
+
+    <div class="stanza">
+      <span class="line line-zh">问题不在于中美会不会竞争。它们一定会竞争。</span>
+      <span class="line">The question is not whether the U.S. and China will compete. They will.</span>
+    </div>
+
+    <div class="pull-quote">
+      <span class="pull-quote-zh" style="font-size: 1.3rem;">真正的问题是：竞争是不是一定会变成冲突？</span>
+      <span class="pull-quote-en" style="margin-top: 1rem;">The real question: Must competition become conflict?</span>
+      <span class="pull-quote-en" style="margin-top: 1rem; font-style: normal; color: var(--ink-mid);">Or can we, through new forms of dialogue, find space for cooperation within rivalry?</span>
+    </div>
+
+    <div class="stanza" style="margin-top: 2.5rem;">
+      <span class="line line-zh">如果两国真的在同一条船上，那么失败不会是各自的。而是共同的。</span>
+      <span class="line" style="font-style: italic;">If both nations truly share the same boat, then failure will not be theirs alone — it will be mutual.</span>
+    </div>
+
+    <div class="visual-separator">
+      <span>·</span>
+    </div>
+
+    <div class="stanza">
+      <span class="line line-zh" style="font-weight: 400; font-size: 1.1rem;">真正的挑战，不只是竞争。而是学会在同一条船上，一起前进。</span>
+      <span class="line" style="font-size: 1.1rem;">The true challenge is not competition itself — but learning to move forward together in the same boat.</span>
+    </div>
+  </section>
+
+  <!-- FINAL CLOSING -->
+  <section class="closing section" style="border-top: 0.5px solid rgba(26,26,46,0.12);">
     <div class="closing-zh">同舟共济</div>
-    <p class="closing-en">In the same boat, we row together.</p>
+    <p class="closing-en">In the same boat, together.</p>
     <p class="closing-final">
-      The question is not whether the U.S. and China will compete. They will.<br><br>
-      The real question is whether competition must become conflict —<br>
-      or whether, through new forms of dialogue, we can find space for cooperation within rivalry.<br><br>
-      <span style="font-family: 'Noto Serif SC', serif; font-weight: 300; letter-spacing: 0.1em; color: var(--gold);">如果两国真的在同一条船上，那么失败不会是各自的。而是共同的。</span>
+      The pathway forward requires more than government diplomacy or market forces alone.<br><br>
+      It requires the voices, engagement, and creativity of business leaders, entrepreneurs, and thinkers from both nations —<br>
+      willing to build bridges where walls are rising,<br>
+      and to find common ground in a landscape of growing contention.<br><br>
+      <span style="font-family: 'Noto Serif SC', serif; font-weight: 300; letter-spacing: 0.1em; color: var(--gold);">这只是开始。这是一种可能。</span><br>
+      <span style="font-family: 'EB Garamond', serif; font-style: italic; color: var(--gold); letter-spacing: 0.08em;">This is only a beginning. This is a possibility.</span>
     </p>
   </section>
 
@@ -875,6 +1095,36 @@
 
   sections.forEach(s => observer.observe(s));
 
+  // Smooth scroll for nav links
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', (e) => {
+      e.preventDefault();
+      const targetId = link.getAttribute('href');
+      const target = document.querySelector(targetId);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Animate data numbers on scroll
+  const animateNumbers = () => {
+    const dataNumbers = document.querySelectorAll('.data-number');
+    dataNumbers.forEach(num => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting && !num.classList.contains('animated')) {
+            num.classList.add('animated-stat');
+            num.classList.add('animated');
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(num);
+    });
+  };
+  
+  animateNumbers();
+
   window.addEventListener('scroll', () => {
     const scrolled = window.scrollY;
     const total = document.body.scrollHeight - window.innerHeight;
@@ -883,8 +1133,14 @@
     const strainSection = document.getElementById('strain');
     if (strainSection) {
       const rect = strainSection.getBoundingClientRect();
-      if (rect.top < window.innerHeight * 0.6) {
-        marker.style.left = '65%';
+      const sectionTop = rect.top;
+      const sectionHeight = rect.height;
+      
+      if (sectionTop < window.innerHeight * 0.8 && sectionTop > -sectionHeight) {
+        // Smoothly move marker from 40% to 70% as you scroll through section
+        const progress = 1 - (sectionTop / (window.innerHeight * 0.8));
+        const position = 40 + (progress * 30);
+        marker.style.left = Math.min(70, Math.max(40, position)) + '%';
       }
     }
   });
